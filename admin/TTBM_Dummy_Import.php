@@ -59,182 +59,203 @@
 				return true;
 			}
 
+			// The tour list always has the import button, so it always needs the popup.
+			private static function should_load_popup() {
+				return self::is_eligible() || (isset($_GET['page']) && 'ttbm_list' === sanitize_key(wp_unslash($_GET['page'])));
+			}
+
 			public function enqueue_assets() {
-				if (!self::is_eligible()) {
+				if (!self::should_load_popup()) {
 					return;
 				}
 				wp_enqueue_style(
-					'ttbm-dummy-installer',
-					TTBM_PLUGIN_URL . '/assets/admin/ttbm_woo_installer.css',
+					'ttbm-dummy-import',
+					TTBM_PLUGIN_URL . '/assets/admin/ttbm_dummy_import.css',
 					array(),
-					filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_woo_installer.css')
+					filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm_dummy_import.css')
 				);
 			}
 
+			/**
+			 * Brand row at the top of each popup view: a state icon and the plugin name.
+			 */
+			private static function popup_brand($icon_path, $modifier = '') {
+				?>
+				<div class="ttbm-dimp-brand">
+					<div class="ttbm-dimp-badge<?php echo $modifier ? ' ttbm-dimp-badge--' . esc_attr($modifier) : ''; ?>">
+						<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><?php echo $icon_path; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG markup from this file ?></svg>
+					</div>
+					<div class="ttbm-dimp-brand-name"><?php esc_html_e('Tour Booking Manager', 'tour-booking-manager'); ?></div>
+				</div>
+				<?php
+			}
+
 			public function render_popup() {
-				if (!self::is_eligible()) {
+				if (!self::should_load_popup()) {
 					return;
 				}
-				$display_style = $this->should_auto_show_popup() ? '' : 'display: none;';
+				$hidden = $this->should_auto_show_popup() ? '' : ' hidden';
+				$check = '<path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+				$items = array(
+					__('Tours and reviews', 'tour-booking-manager'),
+					__('Hotels', 'tour-booking-manager'),
+					__('Places and guides', 'tour-booking-manager'),
+					__('Categories and pages', 'tour-booking-manager'),
+				);
 				?>
-				<div id="ttbm-woo-overlay" class="ttbm-woo-overlay ttbm-dummy-overlay" style="<?php echo esc_attr($display_style); ?>">
-					<div class="ttbm-woo-popup">
-						<div class="ttbm-woo-header">
-							<div class="ttbm-woo-header-icon">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-									<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-								</svg>
+				<div id="ttbm-dimp-overlay" class="ttbm-dimp-overlay"<?php echo $hidden; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed attribute ?>>
+					<div class="ttbm-dimp-popup" role="dialog" aria-modal="true" aria-labelledby="ttbm-dimp-title-ask">
+
+						<div class="ttbm-dimp-view" data-view="ask">
+							<?php self::popup_brand('<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>'); ?>
+							<div class="ttbm-dimp-text">
+								<h2 class="ttbm-dimp-title" id="ttbm-dimp-title-ask"><?php esc_html_e('Import dummy tours?', 'tour-booking-manager'); ?></h2>
+								<p class="ttbm-dimp-desc"><?php esc_html_e('See how your booking pages look with ready-made content. You can edit or delete it at any time.', 'tour-booking-manager'); ?></p>
 							</div>
-							<span class="ttbm-woo-header-text"><?php esc_html_e('Tour Booking Manager', 'tour-booking-manager'); ?></span>
-						</div>
-
-						<div class="ttbm-woo-icon-wrapper">
-							<div class="ttbm-woo-icon">
-								<svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-									<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
-									<path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-								</svg>
+							<ul class="ttbm-dimp-list">
+								<?php foreach ($items as $item) : ?>
+									<li><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none"><?php echo $check; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG markup ?></svg><?php echo esc_html($item); ?></li>
+								<?php endforeach; ?>
+							</ul>
+							<p class="ttbm-dimp-note"><?php esc_html_e('Your own tours stay as they are. Anything already imported is skipped.', 'tour-booking-manager'); ?></p>
+							<div class="ttbm-dimp-actions">
+								<button type="button" class="ttbm-dimp-btn ttbm-dimp-btn--primary" data-action="import">
+									<svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+									<?php esc_html_e('Import dummy tours', 'tour-booking-manager'); ?>
+								</button>
+								<button type="button" class="ttbm-dimp-btn" data-action="dismiss"><?php esc_html_e('Not now', 'tour-booking-manager'); ?></button>
 							</div>
 						</div>
 
-						<div class="ttbm-woo-content">
-							<h2 class="ttbm-woo-title"><?php esc_html_e('Import Dummy Tours?', 'tour-booking-manager'); ?></h2>
-							<p class="ttbm-woo-desc">
-								<?php esc_html_e('Would you like to import dummy tours, hotels, categories, and settings to see how Tour Booking Manager works?', 'tour-booking-manager'); ?>
-							</p>
-						</div>
-
-						<div id="ttbm-woo-progress" class="ttbm-woo-progress" style="display:none;">
-							<div class="ttbm-woo-progress-bar">
-								<div id="ttbm-woo-progress-fill" class="ttbm-woo-progress-fill"></div>
+						<div class="ttbm-dimp-view" data-view="importing" hidden>
+							<?php self::popup_brand('<path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/>'); ?>
+							<div class="ttbm-dimp-text" role="status">
+								<h2 class="ttbm-dimp-title" id="ttbm-dimp-title-importing"><?php esc_html_e('Importing dummy tours', 'tour-booking-manager'); ?></h2>
+								<p class="ttbm-dimp-desc"><?php esc_html_e('This can take a few minutes while the photos download. Please keep this page open.', 'tour-booking-manager'); ?></p>
 							</div>
-							<p id="ttbm-woo-status-text" class="ttbm-woo-status-text"></p>
+							<div class="ttbm-dimp-bar" aria-hidden="true"><span></span></div>
 						</div>
 
-						<div class="ttbm-woo-actions">
-							<button type="button" id="ttbm-dummy-install-btn" class="ttbm-woo-btn ttbm-woo-btn-primary">
-								<span class="ttbm-woo-btn-icon">
-									<svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-										<path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-									</svg>
-								</span>
-								<span class="ttbm-woo-btn-text"><?php esc_html_e('Yes, Import Data', 'tour-booking-manager'); ?></span>
-							</button>
-							<button type="button" id="ttbm-dummy-dismiss-btn" class="ttbm-woo-btn ttbm-woo-btn-secondary">
-								<?php esc_html_e('No, Skip', 'tour-booking-manager'); ?>
-							</button>
+						<div class="ttbm-dimp-view" data-view="done" hidden>
+							<?php self::popup_brand('<path d="M5 12.5l4.5 4.5L19 7.5" stroke-width="2.5"/>', 'done'); ?>
+							<div class="ttbm-dimp-text" role="status">
+								<h2 class="ttbm-dimp-title" id="ttbm-dimp-title-done"><?php esc_html_e('Dummy tours imported', 'tour-booking-manager'); ?></h2>
+								<p class="ttbm-dimp-desc"><?php esc_html_e('Reloading your tour list.', 'tour-booking-manager'); ?></p>
+							</div>
+							<div class="ttbm-dimp-bar ttbm-dimp-bar--full" aria-hidden="true"><span></span></div>
 						</div>
+
+						<div class="ttbm-dimp-view" data-view="already" hidden>
+							<?php self::popup_brand('<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>', 'info'); ?>
+							<div class="ttbm-dimp-text" role="status">
+								<h2 class="ttbm-dimp-title" id="ttbm-dimp-title-already"><?php esc_html_e('Nothing new to import', 'tour-booking-manager'); ?></h2>
+								<p class="ttbm-dimp-desc"><?php esc_html_e('All dummy tours are already on this site.', 'tour-booking-manager'); ?></p>
+							</div>
+							<div class="ttbm-dimp-actions">
+								<button type="button" class="ttbm-dimp-btn" data-action="close"><?php esc_html_e('Close', 'tour-booking-manager'); ?></button>
+							</div>
+						</div>
+
+						<div class="ttbm-dimp-view" data-view="error" hidden>
+							<?php self::popup_brand('<path d="M12 4L2.5 20h19L12 4z"/><path d="M12 10v4.5M12 17.5h.01"/>', 'error'); ?>
+							<div class="ttbm-dimp-text" role="alert">
+								<h2 class="ttbm-dimp-title" id="ttbm-dimp-title-error"><?php esc_html_e("The import didn't finish", 'tour-booking-manager'); ?></h2>
+								<p class="ttbm-dimp-desc"><?php esc_html_e('Anything already imported has been kept. Try again and only the missing items will be added.', 'tour-booking-manager'); ?></p>
+								<p class="ttbm-dimp-note" data-error-detail hidden></p>
+							</div>
+							<div class="ttbm-dimp-actions">
+								<button type="button" class="ttbm-dimp-btn ttbm-dimp-btn--primary" data-action="import"><?php esc_html_e('Try again', 'tour-booking-manager'); ?></button>
+								<button type="button" class="ttbm-dimp-btn" data-action="close"><?php esc_html_e('Not now', 'tour-booking-manager'); ?></button>
+							</div>
+						</div>
+
 					</div>
 				</div>
 
 				<script>
 				(function($) {
-					$(document).ready(function() {
-						var $overlay = $('#ttbm-woo-overlay.ttbm-dummy-overlay');
-						var $popup = $overlay.find('.ttbm-woo-popup');
-						var $btn = $('#ttbm-dummy-install-btn');
-						var $dismissBtn = $('#ttbm-dummy-dismiss-btn');
-						var $progress = $('#ttbm-woo-progress');
-						var $fill = $('#ttbm-woo-progress-fill');
-						var $status = $('#ttbm-woo-status-text');
-						var $actions = $overlay.find('.ttbm-woo-actions');
-						var isWorking = false;
+					$(function() {
+						var $overlay = $('#ttbm-dimp-overlay');
+						if (!$overlay.length) return;
+						var $popup = $overlay.find('.ttbm-dimp-popup');
+						var $detail = $overlay.find('[data-error-detail]');
+						var state = 'ask';
+						var opener = null;
 
-						function openDummyImportPopup() {
-							if (!$overlay.length) return;
-							isWorking = false;
-							$btn.prop('disabled', false);
-							$dismissBtn.prop('disabled', false);
-							$popup.removeClass('ttbm-state-success ttbm-state-error');
-							$progress.hide();
-							$fill.css('width', '0%');
-							$status.text('').removeClass('ttbm-success ttbm-error');
-							$actions.show();
-							$overlay.css({ display: 'flex', opacity: '1' }).hide().fadeIn(300);
+						function show(view) {
+							state = view;
+							$overlay.find('.ttbm-dimp-view').each(function() {
+								this.hidden = this.getAttribute('data-view') !== view;
+							});
+							$popup.attr('aria-labelledby', 'ttbm-dimp-title-' + view);
+							var $focus = $overlay.find('[data-view="' + view + '"] .ttbm-dimp-btn').first();
+							if ($focus.length) $focus.trigger('focus');
 						}
 
-						// Manual trigger from tour list page (bound even if overlay starts hidden)
+						function open() {
+							opener = document.activeElement;
+							$detail.prop('hidden', true).text('');
+							$overlay.prop('hidden', false);
+							show('ask');
+						}
+
+						function close() {
+							if (state === 'importing' || state === 'done') return;
+							$overlay.prop('hidden', true);
+							if (opener && opener.focus) opener.focus();
+						}
+
+						function fail(message) {
+							if (message) $detail.text(message).prop('hidden', false);
+							show('error');
+						}
+
+						// Header button on the tour list (bound even if the popup starts hidden).
 						$(document).on('click', '#ttbm-trigger-dummy-import-btn', function(e) {
 							e.preventDefault();
-							openDummyImportPopup();
+							open();
 						});
 
-						if (!$overlay.length) return;
-
-						$btn.on('click', function(e) {
-							e.preventDefault();
-							if (isWorking) return;
-							isWorking = true;
-							$btn.prop('disabled', true);
-							$dismissBtn.prop('disabled', true);
-
-							$actions.slideUp(250);
-							$progress.slideDown(300);
-
-							$fill.css('width', '50%');
-							$status.text('<?php echo esc_js(__("Importing dummy data. This may take a moment...", "tour-booking-manager")); ?>').removeClass('ttbm-success ttbm-error');
-
+						$overlay.on('click', '[data-action="import"]', function() {
+							if (state === 'importing') return;
+							$detail.prop('hidden', true).text('');
+							show('importing');
 							$.ajax({
 								url: ajaxurl,
 								type: 'POST',
 								data: {
 									action: 'ttbm_import_dummy_data',
-									nonce: '<?php echo wp_create_nonce("ttbm_import_dummy"); ?>'
-								},
-								success: function(response) {
-									if (response.success) {
-										$fill.css('width', '100%');
-										$status.text('<?php echo esc_js(__("Import complete!", "tour-booking-manager")); ?>').addClass('ttbm-success');
-										$popup.addClass('ttbm-state-success');
-										$popup.find('.ttbm-woo-icon').html(
-											'<svg width="40" height="40" viewBox="0 0 24 24" fill="none">' +
-											'<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>' +
-											'<path d="M8 12l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
-											'</svg>'
-										);
-										$popup.find('.ttbm-woo-title').text('<?php echo esc_js(__("Success", "tour-booking-manager")); ?>');
-										$popup.find('.ttbm-woo-desc').text('<?php echo esc_js(__("Dummy data imported successfully. Reloading page...", "tour-booking-manager")); ?>');
-										setTimeout(function() {
-											window.location.reload();
-										}, 1500);
-									} else {
-										showError(response.data && response.data.message ? response.data.message : '<?php echo esc_js(__("Failed to import.", "tour-booking-manager")); ?>');
-									}
-								},
-								error: function() {
-									showError('<?php echo esc_js(__("Failed to import. Please try again.", "tour-booking-manager")); ?>');
+									nonce: '<?php echo esc_js(wp_create_nonce('ttbm_import_dummy')); ?>'
 								}
+							}).done(function(response) {
+								if (!response || !response.success) {
+									fail(response && response.data && response.data.message ? response.data.message : '');
+								} else if (response.data && response.data.imported === 0) {
+									show('already');
+								} else {
+									show('done');
+									setTimeout(function() { window.location.reload(); }, 1200);
+								}
+							}).fail(function() {
+								fail('');
 							});
 						});
 
-						$dismissBtn.on('click', function(e) {
-							e.preventDefault();
-							if (isWorking) return;
-							$overlay.fadeOut(300);
-							$.ajax({
-								url: ajaxurl,
-								type: 'POST',
-								data: {
-									action: 'ttbm_dismiss_dummy_import',
-									nonce: '<?php echo wp_create_nonce("ttbm_dismiss_dummy"); ?>'
-								}
+						$overlay.on('click', '[data-action="dismiss"]', function() {
+							close();
+							$.post(ajaxurl, {
+								action: 'ttbm_dismiss_dummy_import',
+								nonce: '<?php echo esc_js(wp_create_nonce('ttbm_dismiss_dummy')); ?>'
 							});
 						});
 
-						function showError(message) {
-							isWorking = false;
-							$popup.addClass('ttbm-state-error');
-							$status.text(message).addClass('ttbm-error');
-							$fill.css('width', '100%');
-							$btn.prop('disabled', false);
-							$dismissBtn.prop('disabled', false);
-							$actions.slideDown(250);
-							setTimeout(function() {
-								$popup.removeClass('ttbm-state-error');
-								$progress.slideUp(250);
-								$fill.css('width', '0%');
-							}, 3000);
-						}
+						$overlay.on('click', '[data-action="close"]', close);
+
+						$overlay.on('keydown', function(e) {
+							if (e.key === 'Escape') close();
+						});
+
+						if (!$overlay.prop('hidden')) show('ask');
 					});
 				})(jQuery);
 				</script>
@@ -246,8 +267,8 @@
 				if (!current_user_can('manage_options')) {
 					wp_send_json_error(array('message' => 'Permission denied.'));
 				}
-				$this->dummy_import();
-				wp_send_json_success();
+				// The popup shows "Nothing new to import" when this is 0.
+				wp_send_json_success(array('imported' => (int) $this->dummy_import()));
 			}
 
 			public function ajax_dismiss_dummy_import() {
@@ -270,21 +291,26 @@
 				if (function_exists('wp_raise_memory_limit')) {
 					wp_raise_memory_limit('admin');
 				}
-				if (self::is_eligible()) {
+				$dummy_tour_ids = array();
+				if (self::check_plugin('tour-booking-manager', 'tour-booking-manager.php') == 1) {
 					$dummy_taxonomies = $this->dummy_taxonomy();
 					if (array_key_exists('taxonomy', $dummy_taxonomies)) {
 						foreach ($dummy_taxonomies['taxonomy'] as $taxonomy => $dummy_taxonomy) {
 							if (taxonomy_exists($taxonomy)) {
-								$check_terms = get_terms(array('taxonomy' => $taxonomy, 'hide_empty' => false));
-								if (is_string($check_terms) || sizeof($check_terms) == 0) {
-									foreach ($dummy_taxonomy as $taxonomy_data) {
-										unset($term);
-										$term = wp_insert_term($taxonomy_data['name'], $taxonomy);
+								foreach ($dummy_taxonomy as $taxonomy_data) {
+									// Existing terms are left as they are; only missing ones are added.
+									if (term_exists($taxonomy_data['name'], $taxonomy)) {
+										continue;
+									}
+									unset($term);
+									$term = wp_insert_term($taxonomy_data['name'], $taxonomy);
+									if (is_wp_error($term)) {
+										continue;
+									}
 
-										if (array_key_exists('meta_data', $taxonomy_data)) {
-											foreach ($taxonomy_data['meta_data'] as $meta_key => $data) {
-												update_term_meta($term['term_id'], $meta_key, $data);
-											}
+									if (array_key_exists('meta_data', $taxonomy_data)) {
+										foreach ($taxonomy_data['meta_data'] as $meta_key => $data) {
+											update_term_meta($term['term_id'], $meta_key, $data);
 										}
 									}
 								}
@@ -297,7 +323,6 @@
 					// can reference them by human-readable name in the static dummy data below.
 					$place_name_to_id = array();
 					$guide_name_to_id = array();
-					$dummy_tour_ids = array();
 					if (array_key_exists('custom_post', $dummy_cpt)) {
 						foreach ($dummy_cpt['custom_post'] as $custom_post => $dummy_post) {
 							unset($args);
@@ -307,15 +332,21 @@
 							);
 							unset($post);
 							$post = new WP_Query($args);
-							// On a repeat import the places and guides already exist: link tours to those.
+							// Places and guides already on the site are linked to the new tours.
+							$existing_titles = array();
 							foreach ($post->posts as $existing_post) {
+								$existing_titles[$existing_post->post_title] = true;
 								if ($custom_post === 'ttbm_places') {
 									$place_name_to_id[$existing_post->post_title] = $existing_post->ID;
 								} elseif ($custom_post === 'ttbm_guide') {
 									$guide_name_to_id[$existing_post->post_title] = $existing_post->ID;
 								}
 							}
-							if ($post->post_count == 0) {
+							// Only items the site does not have yet are created, so importing again adds no duplicates.
+							$dummy_post = array_filter($dummy_post, function ($dummy_data) use ($existing_titles) {
+								return !isset($dummy_data['name'], $existing_titles[$dummy_data['name']]);
+							});
+							if (!empty($dummy_post)) {
 								foreach ($dummy_post as $dummy_data) {
 									$args = array();
 									if (isset($dummy_data['name']))
@@ -443,10 +474,11 @@
 						}
 					}
 					TTBM_Woocommerce_Plugin::on_activation_page_create();
-					$this->update_related_products();
+					$this->update_related_products($dummy_tour_ids);
 					$this->refresh_dummy_tour_dates($dummy_tour_ids);
 					update_option('ttbm_dummy_already_inserted', 'yes');
 				}
+				return count($dummy_tour_ids);
 			}
 
 			/**
@@ -524,11 +556,10 @@
 
 			/**
 			 * Assign each dummy tour 4 other dummy tours as "related tours", picked at random
-			 * (excluding itself). Runs once, after all dummy tour posts already exist.
+			 * (excluding itself). Runs after the dummy tour posts exist and touches only
+			 * those, so the site's own tours keep their related tours.
 			 */
-			public function update_related_products() {
-				$args = array('fields' => 'ids', 'post_type' => 'ttbm_tour', 'numberposts' => -1, 'post_status' => 'publish');
-				$ids = get_posts($args);
+			public function update_related_products($ids) {
 				foreach ($ids as $id) {
 					$others = array_values(array_diff($ids, array($id)));
 					shuffle($others);

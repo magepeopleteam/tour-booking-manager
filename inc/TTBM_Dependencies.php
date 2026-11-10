@@ -78,6 +78,8 @@
 				}
 				// Loaded last so the Pro Features placeholder menu sits at the bottom.
 				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_Pro_Locked_Menus.php';
+				// MCP page for sites without PRO's MCP server.
+				require_once TTBM_PLUGIN_DIR . '/admin/TTBM_MCP_Promo.php';
 			}
 			/**
 			 * Detect the active Pro addon before its main class has necessarily

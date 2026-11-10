@@ -13,7 +13,7 @@
 				return array(
 					'paypal' => array(
 						'label' => esc_html__('PayPal', 'tour-booking-manager'),
-						'desc' => esc_html__('Accept payments via PayPal.', 'tour-booking-manager'),
+						'desc' => esc_html__('Take card and PayPal payments online.', 'tour-booking-manager'),
 						'enable_key' => 'ttbm_paypal_enable',
 						'pro' => true,
 						'fields' => array(
@@ -24,7 +24,7 @@
 					),
 					'stripe' => array(
 						'label' => esc_html__('Stripe', 'tour-booking-manager'),
-						'desc' => esc_html__('Accept payments via Stripe.', 'tour-booking-manager'),
+						'desc' => esc_html__('Take card payments online.', 'tour-booking-manager'),
 						'enable_key' => 'ttbm_stripe_enable',
 						'pro' => true,
 						'fields' => array(
@@ -37,7 +37,7 @@
 					),
 					'offline' => array(
 						'label' => esc_html__('Offline Payment', 'tour-booking-manager'),
-						'desc' => esc_html__('Let customers pay offline (bank transfer, cash, pay at venue).', 'tour-booking-manager'),
+						'desc' => esc_html__('Bank transfer, cash or pay at the venue. You confirm each booking once paid.', 'tour-booking-manager'),
 						'enable_key' => 'ttbm_offline_enable',
 						'pro' => false,
 						'fields' => array(
@@ -91,6 +91,8 @@
 				add_action('wp_ajax_ttbm_render_book_now', array($this, 'ajax_render_book_now'));
 				add_action('wp_enqueue_scripts', array($this, 'enqueue_login_gate_assets'));
 				add_action('admin_init', array($this, 'maybe_migrate_booking_mode'));
+				// Runs early on every request (front end too), before any gateway reads the settings.
+				add_action('init', array($this, 'maybe_default_offline_payment'), 5);
 				add_action('admin_notices', array($this, 'maybe_render_gateway_notice'));
 				add_action('edit_form_top', array($this, 'maybe_render_edit_payment_notice'));
 				add_action('admin_enqueue_scripts', array($this, 'maybe_enqueue_edit_payment_assets'));
@@ -168,6 +170,22 @@
 				}
 				$legacy_enabled = !isset($opts['ttbm_wc_payment_enabled']) || $opts['ttbm_wc_payment_enabled'] === 'on';
 				$opts['ttbm_booking_mode'] = $legacy_enabled ? 'woocommerce' : 'custom';
+				update_option('ttbm_payment_settings', $opts);
+			}
+			/**
+			 * Turn Offline Payment on by default while bookings go through Custom Payment
+			 * (no WooCommerce checkout), so guests can book out of the box. Only when the
+			 * setting has never been saved: an admin who turned it off keeps it off.
+			 */
+			public function maybe_default_offline_payment() {
+				$opts = get_option('ttbm_payment_settings', array());
+				if (!is_array($opts) || isset($opts['ttbm_offline_enable'])) {
+					return;
+				}
+				if ('custom' !== self::get_booking_mode() || !self::custom_payment_available()) {
+					return;
+				}
+				$opts['ttbm_offline_enable'] = 'on';
 				update_option('ttbm_payment_settings', $opts);
 			}
 			// Mode-aware "no gateway configured" message — only ever describes the
@@ -362,10 +380,15 @@
 				}
 				?>
 				<div class="ttbm-edit-payment-modal" id="ttbm-edit-payment-modal" data-ttbm-payment-modal style="display:none;">
-					<div class="ttbm-edit-payment-modal-box">
+					<div class="ttbm-edit-payment-modal-box" role="dialog" aria-modal="true" aria-labelledby="ttbm-edit-payment-modal-title">
 						<div class="ttbm-edit-payment-modal-head">
-							<h2><?php esc_html_e('Payment Method', 'tour-booking-manager'); ?></h2>
-							<button type="button" class="ttbm-edit-payment-modal-close" data-ttbm-payment-modal-close aria-label="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>">&times;</button>
+							<div class="ttbm-edit-payment-modal-titles">
+								<h2 id="ttbm-edit-payment-modal-title"><?php esc_html_e('Payments', 'tour-booking-manager'); ?></h2>
+								<p><?php esc_html_e('Choose how guests pay for their bookings.', 'tour-booking-manager'); ?></p>
+							</div>
+							<button type="button" class="ttbm-edit-payment-modal-close" data-ttbm-payment-modal-close aria-label="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>">
+								<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+							</button>
 						</div>
 						<div class="ttbm-edit-payment-modal-body" id="ttbm-edit-payment-modal-body">
 							<?php $this->render_tab_content(); ?>
@@ -400,13 +423,28 @@
 					filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-payment-settings.js'),
 					true
 				);
-				wp_localize_script('ttbm-payment-settings', 'ttbmPaymentSettings', array(
+				wp_localize_script('ttbm-payment-settings', 'ttbmPaymentSettings', self::script_strings());
+				wp_add_inline_style('ttbm-global-settings', $this->edit_payment_notice_css());
+				wp_add_inline_script('ttbm-payment-settings', $this->edit_payment_notice_js());
+			}
+
+			/**
+			 * Text used by ttbm-payment-settings.js, shared by the Settings › Payments tab
+			 * and the Payment Method popup on the tour and hotel editors.
+			 */
+			public static function script_strings(): array {
+				return array(
 					'enabled_label' => esc_html__('Enabled', 'tour-booking-manager'),
 					'disabled_label' => esc_html__('Disabled', 'tour-booking-manager'),
+					'on_label' => esc_html__('On', 'tour-booking-manager'),
+					'off_label' => esc_html__('Off', 'tour-booking-manager'),
 					'error_label' => esc_html__('An error occurred. Please try again.', 'tour-booking-manager'),
 					'saving_label' => esc_html__('Saving…', 'tour-booking-manager'),
+					'saved_label' => esc_html__('Settings saved.', 'tour-booking-manager'),
+					'unsaved_label' => esc_html__('You have unsaved changes.', 'tour-booking-manager'),
+					'in_use_label' => esc_html__('In use', 'tour-booking-manager'),
 					/* translators: %s: booking mode name, e.g. "WooCommerce Checkout" */
-					'mode_saved_label' => esc_html__('Booking mode changed to %s.', 'tour-booking-manager'),
+					'mode_saved_label' => esc_html__('Checkout changed to %s.', 'tour-booking-manager'),
 					'wc_mode_label' => esc_html__('WooCommerce Checkout', 'tour-booking-manager'),
 					'custom_mode_label' => esc_html__('Custom Payment', 'tour-booking-manager'),
 					'active_label' => esc_html__('Active', 'tour-booking-manager'),
@@ -416,19 +454,13 @@
 					'configure_wc_label' => esc_html__('Configure WooCommerce Payments', 'tour-booking-manager'),
 					'none_label' => esc_html__('None', 'tour-booking-manager'),
 					'rail_nothing' => esc_html__('Nothing turned on yet', 'tour-booking-manager'),
-					'rail_ready_title' => esc_html__('Ready for bookings.', 'tour-booking-manager'),
-					'rail_ready_text' => esc_html__('Guests can pay with your enabled methods.', 'tour-booking-manager'),
-					'rail_warn_title' => esc_html__('Guests cannot pay yet.', 'tour-booking-manager'),
-					'rail_warn_text' => esc_html__('Turn on at least one payment method.', 'tour-booking-manager'),
 					'payment_settings_label' => esc_html__('Payment Settings', 'tour-booking-manager'),
 					'configure_payment_label' => esc_html__('Configure payment method', 'tour-booking-manager'),
 					'edit_notice_text' => esc_html__('No payment method is currently configured.', 'tour-booking-manager'),
 					'edit_notice_action' => esc_html__('Please configure a payment method to accept bookings.', 'tour-booking-manager'),
 					'edit_notice_button' => esc_html__('Configure payment', 'tour-booking-manager'),
 					'payment_settings_url' => admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page#ttbm_payment_settings'),
-				));
-				wp_add_inline_style('ttbm-global-settings', $this->edit_payment_notice_css());
-				wp_add_inline_script('ttbm-payment-settings', $this->edit_payment_notice_js());
+				);
 			}
 
 			private function edit_payment_notice_css(): string {
@@ -443,25 +475,20 @@
 .ttbm-edit-payment-notice-link:hover,.ttbm-edit-payment-notice-link:focus{background:var(--ttbm-ed-accent,var(--color_theme,#6b35e8));color:#fff;}
 .ttbm-edit-payment-notice-link:focus-visible{outline:2px solid var(--ttbm-ed-accent,var(--color_theme,#6b35e8));outline-offset:2px;}
 .ttbm-edit-payment-modal{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:100001;align-items:center;justify-content:center;padding:20px;}
-.ttbm-edit-payment-modal-box{background:#fff;border-radius:12px;max-width:860px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 24px 60px rgba(15,23,42,.35);}
-.ttbm-edit-payment-modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid #e5e7eb;position:sticky;top:0;background:#fff;z-index:1;}
-.ttbm-edit-payment-modal-head h2{margin:0;font-size:17px;font-weight:700;color:#111827;}
-.ttbm-edit-payment-modal-close{border:none;background:transparent;font-size:22px;line-height:1;cursor:pointer;color:#6b7280;padding:4px 8px;}
-.ttbm-edit-payment-modal-close:hover{color:#111827;}
-.ttbm-edit-payment-modal-body{padding:20px 24px 28px;}
+.ttbm-edit-payment-modal-box{display:flex;flex-direction:column;background:#fff;border-radius:14px;max-width:960px;width:100%;max-height:calc(100vh - 40px);overflow:hidden;box-shadow:0 24px 64px rgba(15,23,42,.35);}
+.ttbm-edit-payment-modal-head{flex:none;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 28px;border-bottom:1px solid #dde2e8;background:#fff;}
+.ttbm-edit-payment-modal-titles{display:flex;flex-direction:column;gap:2px;}
+.ttbm-edit-payment-modal-head h2{margin:0;padding:0;font-size:20px;line-height:1.3;font-weight:700;color:#1b2430;}
+.ttbm-edit-payment-modal-head p{margin:0;font-size:14px;color:#4a5565;}
+.ttbm-edit-payment-modal-close{flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:0;border-radius:8px;background:transparent;color:#4a5565;cursor:pointer;}
+.ttbm-edit-payment-modal-close:hover{background:#f1f3f6;color:#1b2430;}
+.ttbm-edit-payment-modal-close:focus-visible{outline:2px solid #0f766e;outline-offset:2px;}
+.ttbm-edit-payment-modal-body{flex:1;min-height:0;overflow-y:auto;padding:0;}
 body.ttbm-modern-edit-page #poststuff > .ttbm-edit-payment-notice,body.ttbm-modern-edit-page #post-body > .ttbm-edit-payment-notice{box-sizing:border-box;}
 body.ttbm-modern-edit-page #post-body > .ttbm-edit-payment-notice{width:100%;max-width:1250px;margin:16px auto 0;clear:both;}
 @media (max-width:1200px){body.ttbm-modern-edit-page #post-body > .ttbm-edit-payment-notice{max-width:none;margin:12px 16px 0;width:auto;}}
 @media (max-width:782px){body.ttbm-modern-edit-page #poststuff > .ttbm-edit-payment-notice,body.ttbm-modern-edit-page #post-body > .ttbm-edit-payment-notice{flex-direction:column;align-items:stretch;padding:12px 14px;}.ttbm-edit-payment-notice-link{justify-content:center;}}
-/* Payment Method modal: gateway cards in a row, compact booking mode, open additional settings. */
-#ttbm-edit-payment-modal .ttbm-edit-payment-modal-box{max-width:800px;border-radius:14px;}
-#ttbm-edit-payment-modal .ttbm-edit-payment-modal-head{padding:20px 28px;}
-#ttbm-edit-payment-modal .ttbm-edit-payment-modal-head h2{font-size:18px;color:#1e293b;}
-#ttbm-edit-payment-modal .ttbm-edit-payment-modal-close{width:36px;height:36px;padding:0;border-radius:8px;background:#f1f5f9;color:#334155;font-size:20px;display:flex;align-items:center;justify-content:center;}
-#ttbm-edit-payment-modal .ttbm-edit-payment-modal-close:hover{background:#e2e8f0;color:#0f172a;}
-#ttbm-edit-payment-modal .ttbm-edit-payment-modal-body{padding:24px 28px 0;}
-#ttbm-edit-payment-modal .ttbm-payment-settings-content{gap:16px;}
-#ttbm-edit-payment-modal .ttbm-pay-rail{flex-basis:100%;max-width:none;}
+/* Payment Method modal: the WooCommerce panel keeps its own layout inside the new shell. */
 #ttbm-edit-payment-modal .ttbm-pay-field-desc{font-size:12px;line-height:1.4;color:#475569;}
 #ttbm-edit-payment-modal .ttbm-pay-misc-save-footer{position:sticky;bottom:0;margin:24px -28px 0;padding:16px 28px;background:#f8fafc;border-top:1px solid #e2e8f0;z-index:1;}
 #ttbm-edit-payment-modal .ttbm-pay-misc-save-btn.button.button-primary{height:40px !important;min-height:40px !important;padding:0 20px !important;border-radius:8px !important;background:var(--ttbm-ed-accent,var(--color_theme,#6b35e8)) !important;border-color:var(--ttbm-ed-accent,var(--color_theme,#6b35e8)) !important;font-size:14px !important;font-weight:600;}
@@ -500,21 +527,26 @@ jQuery(function ($) {
 		$modal.appendTo('body');
 	}
 	if (!$modal.length) { return; }
+	var opener = null;
+	function closeModal() {
+		$modal.hide();
+		if (opener && opener.focus) { opener.focus(); }
+	}
 	$(document).on('click', '[data-ttbm-payment-modal-open]', function (e) {
 		e.preventDefault();
+		opener = this;
 		$modal.css('display', 'flex');
 		$modal.find('.ttbm-pay-acc-body').show();
 		$modal.find('.ttbm-pay-acc-header').addClass('is-open');
+		$modal.find('.ttbm-edit-payment-modal-close').trigger('focus');
 	});
-	$(document).on('click', '[data-ttbm-payment-modal-close]', function () {
-		$modal.hide();
-	});
+	$(document).on('click', '[data-ttbm-payment-modal-close]', closeModal);
 	$modal.on('click', function (e) {
-		if (e.target === this) { $modal.hide(); }
+		if (e.target === this) { closeModal(); }
 	});
 	$(document).on('keydown', function (e) {
-		if ((e.key === 'Escape' || e.keyCode === 27) && $modal.is(':visible')) {
-			$modal.hide();
+		if ((e.key === 'Escape' || e.keyCode === 27) && $modal.is(':visible') && !$('.ttbm-gw-modal:visible, #ttbm-woo-install-modal:visible').length) {
+			closeModal();
 		}
 	});
 });
@@ -551,8 +583,9 @@ JS;
 				return $sections;
 			}
 			/**
-			 * Everything below is hand-rendered. The Booking Mode cards are the
-			 * single flow switch; only the active flow's settings are displayed.
+			 * Payments screen: a setup checklist on the left and, on the right, one status
+			 * message, the checkout choice and the active checkout's settings. Shared by the
+			 * Settings › Payments tab and the Payment Method popup on the tour editor.
 			 */
 			public function render_tab_content() {
 				if (!$this->can_manage_payments()) {
@@ -560,15 +593,15 @@ JS;
 				}
 				$custom_is_default = self::get_booking_mode() === 'custom';
 				?>
-				<div class="ttbm-payment-settings-content">
+				<div class="ttbm-payment-settings-content ttbm-pset">
 					<?php $this->render_setup_rail(); ?>
-					<div class="ttbm-pay-main">
+					<div class="ttbm-pay-main ttbm-pset-main">
+						<?php $this->render_status_banner(); ?>
 						<?php $this->render_booking_mode_selector(); ?>
-
 						<div class="ttbm-pay-subtab-panel ttbm-pay-mode-panel" data-subtab-panel="woocommerce" <?php echo $custom_is_default ? 'style="display:none;"' : ''; ?>>
 							<?php $this->render_woocommerce_subtab(); ?>
 						</div>
-						<div class="ttbm-pay-subtab-panel ttbm-pay-mode-panel" data-subtab-panel="custom" <?php echo $custom_is_default ? '' : 'style="display:none;"'; ?>>
+						<div class="ttbm-pay-subtab-panel ttbm-pay-mode-panel ttbm-pset-panel" data-subtab-panel="custom" <?php echo $custom_is_default ? '' : 'style="display:none;"'; ?>>
 							<?php $this->render_custom_payment_subtab(); ?>
 						</div>
 					</div>
@@ -576,133 +609,184 @@ JS;
 				<?php
 			}
 			/**
-			 * Left "setup checklist": booking mode, payment method, booking rules.
-			 * Rendered from the saved state; ttbm-payment-settings.js keeps it in sync as the page changes.
+			 * Status message above the checkout choice: whether guests can book yet,
+			 * and what to do next. Also sent back after every save so the page can update.
+			 *
+			 * @return array{0: bool, 1: string, 2: string} ready, title, text
+			 */
+			public static function status_copy(): array {
+				$mode = self::get_booking_mode();
+				if (self::has_functional_payment_method()) {
+					$opts = (array) get_option('ttbm_payment_settings', array());
+					$is_on = function ($key) use ($opts) {
+						return isset($opts[$key]) && 'on' === $opts[$key];
+					};
+					if ('custom' === $mode && $is_on('ttbm_offline_enable') && !$is_on('ttbm_paypal_enable') && !$is_on('ttbm_stripe_enable')) {
+						return array(true, __('Guests can book now.', 'tour-booking-manager'), __('New bookings come in as pending. Confirm each one once you\'ve been paid.', 'tour-booking-manager'));
+					}
+					$names = self::get_active_gateway_names();
+					/* translators: %s: comma-separated payment method names */
+					return array(true, __('Guests can book now.', 'tour-booking-manager'), $names ? sprintf(__('Guests pay with %s.', 'tour-booking-manager'), implode(', ', $names)) : '');
+				}
+				if ('woocommerce' === $mode) {
+					$text = __('Turn on a WooCommerce payment method below to start taking bookings.', 'tour-booking-manager');
+				} elseif (TTBM_Global_Function::has_woocommerce()) {
+					$text = __('Turn on a payment method below to start taking bookings.', 'tour-booking-manager');
+				} else {
+					$text = __('Turn on Offline Payment below, or activate WooCommerce, to start taking bookings.', 'tour-booking-manager');
+				}
+				return array(false, __('Guests can\'t book yet.', 'tour-booking-manager'), $text);
+			}
+			private function render_status_banner() {
+				list($ready, $title, $text) = self::status_copy();
+				?>
+				<div class="ttbm-pset-status <?php echo $ready ? 'is-ready' : 'is-warn'; ?>" data-pset-status role="status">
+					<span class="ttbm-pset-status__icon" aria-hidden="true">
+						<svg class="ttbm-pset-status__warn" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4L2.5 20h19L12 4z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
+						<svg class="ttbm-pset-status__ok" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16.5 9.5"/></svg>
+					</span>
+					<span class="ttbm-pset-status__copy">
+						<b data-pset-status-title><?php echo esc_html($title); ?></b>
+						<span data-pset-status-text><?php echo esc_html($text); ?></span>
+					</span>
+				</div>
+				<?php
+			}
+			/**
+			 * Step marker: a check when the step is done, its number otherwise (CSS picks).
+			 */
+			private static function rail_mark($number) {
+				?>
+				<span class="ttbm-pset-steps__mark" aria-hidden="true">
+					<svg class="ttbm-pset-steps__check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+					<span class="ttbm-pset-steps__num"><?php echo esc_html($number); ?></span>
+				</span>
+				<?php
+			}
+			/**
+			 * Left "setup checklist": checkout, payment method, booking rules.
+			 * Rendered from the saved state; ttbm-payment-settings.js updates it after each save.
 			 */
 			private function render_setup_rail() {
 				$names = self::get_active_gateway_names();
-				$ready = !empty($names);
+				$ready = self::has_functional_payment_method();
+				$rules = 'custom' === self::get_booking_mode()
+					? __('Confirmation page and guests', 'tour-booking-manager')
+					: __('Cart redirect and confirmation', 'tour-booking-manager');
 				?>
-				<aside class="ttbm-pay-rail" aria-label="<?php esc_attr_e('Payment setup', 'tour-booking-manager'); ?>">
-					<div class="ttbm-pay-rail__head">
-						<h3><?php esc_html_e('Payments', 'tour-booking-manager'); ?></h3>
-						<p><?php esc_html_e('Three quick steps to start taking bookings.', 'tour-booking-manager'); ?></p>
-					</div>
-					<ol class="ttbm-pay-rail__steps">
+				<aside class="ttbm-pset-rail" aria-label="<?php esc_attr_e('Setup progress', 'tour-booking-manager'); ?>">
+					<ol class="ttbm-pset-steps">
 						<li class="is-done">
-							<span class="ttbm-pay-rail__mark" aria-hidden="true">&#10003;</span>
-							<span class="ttbm-pay-rail__text"><b><?php esc_html_e('Booking mode', 'tour-booking-manager'); ?></b><span data-rail="mode"><?php echo esc_html(self::get_booking_mode_label()); ?></span></span>
+							<?php self::rail_mark(1); ?>
+							<span class="ttbm-pset-steps__text"><b><?php esc_html_e('Checkout', 'tour-booking-manager'); ?></b><span data-pset-rail="mode"><?php echo esc_html(self::get_booking_mode_label()); ?></span></span>
 						</li>
-						<li class="<?php echo $ready ? 'is-done' : 'is-todo'; ?>" data-rail="method-step">
-							<span class="ttbm-pay-rail__mark" data-rail="mark" aria-hidden="true"><?php echo $ready ? '&#10003;' : '2'; ?></span>
-							<span class="ttbm-pay-rail__text"><b><?php esc_html_e('Payment method', 'tour-booking-manager'); ?></b><span data-rail="methods"><?php echo esc_html($ready ? implode(', ', $names) : __('Nothing turned on yet', 'tour-booking-manager')); ?></span></span>
+						<li class="<?php echo $ready ? 'is-done' : 'is-todo'; ?>" data-pset-rail="method-step"<?php echo $ready ? '' : ' aria-current="step"'; ?>>
+							<?php self::rail_mark(2); ?>
+							<span class="ttbm-pset-steps__text"><b><?php esc_html_e('Payment method', 'tour-booking-manager'); ?></b><span data-pset-rail="methods"><?php echo esc_html($ready && $names ? implode(', ', $names) : __('Nothing turned on yet', 'tour-booking-manager')); ?></span></span>
 						</li>
-						<li>
-							<span class="ttbm-pay-rail__mark" aria-hidden="true">3</span>
-							<span class="ttbm-pay-rail__text"><b><?php esc_html_e('Booking rules', 'tour-booking-manager'); ?></b><span><?php esc_html_e('Cart redirect and confirmation', 'tour-booking-manager'); ?></span></span>
+						<li class="<?php echo $ready ? 'is-next' : ''; ?>" data-pset-rail="rules-step"<?php echo $ready ? ' aria-current="step"' : ''; ?>>
+							<?php self::rail_mark(3); ?>
+							<span class="ttbm-pset-steps__text"><b><?php esc_html_e('Booking rules', 'tour-booking-manager'); ?></b><span><?php echo esc_html($rules); ?></span></span>
 						</li>
 					</ol>
-					<div class="ttbm-pay-rail__note <?php echo $ready ? 'is-ready' : 'is-warn'; ?>" data-rail="note" role="status">
-						<?php if ($ready) : ?>
-							<b><?php esc_html_e('Ready for bookings.', 'tour-booking-manager'); ?></b> <?php esc_html_e('Guests can pay with your enabled methods.', 'tour-booking-manager'); ?>
-						<?php else : ?>
-							<b><?php esc_html_e('Guests cannot pay yet.', 'tour-booking-manager'); ?></b> <?php esc_html_e('Turn on at least one payment method.', 'tour-booking-manager'); ?>
-						<?php endif; ?>
-					</div>
 				</aside>
 				<?php
 			}
-			// Full-width Booking Mode section. Always renders
-			// with both cards — when mode_availability() isn't 'both', the
-			// unavailable card renders disabled (with an explanation) instead
-			// of the whole section collapsing into a single line of text, so
-			// the feature is always visibly present, matching the reference
-			// plugins' card layout in every state.
+			/**
+			 * Checkout choice as two tabs, so both checkouts read as options. With both
+			 * available, picking a tab switches the checkout (saved instantly). Otherwise
+			 * the tab of the checkout that can't be used yet still opens, to explain why
+			 * and (for WooCommerce) offer to set it up; the checkout in use doesn't change.
+			 */
 			private function render_booking_mode_selector() {
 				$availability = self::mode_availability();
-				$wc_active = TTBM_Global_Function::has_woocommerce();
-				$custom_active = self::custom_payment_available();
 				$mode = self::get_booking_mode();
-				$is_wc = $mode === 'woocommerce';
-				$is_custom = $mode === 'custom';
 				$can_choose = 'both' === $availability;
-				$has_gateway = self::has_gateway_for_mode($mode);
+				$wc_active = TTBM_Global_Function::has_woocommerce();
+				$available = array(
+					'custom' => self::custom_payment_available(),
+					'woocommerce' => $wc_active,
+				);
+				$icons = array(
+					'custom' => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M14.8 8.7c-.6-.6-1.5-.9-2.5-.9-1.5 0-2.7.8-2.7 2s1 1.8 2.7 2.2c1.7.4 2.7 1 2.7 2.2s-1.2 2-2.8 2c-1.1 0-2.2-.4-2.9-1.1M12.2 6.2v11.6"/></svg>',
+					'woocommerce' => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.1 9.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 7H6"/><circle cx="10" cy="19" r="1.4"/><circle cx="18" cy="19" r="1.4"/></svg>',
+				);
+				$modes = array(
+					'custom' => array(
+						'title' => __('Custom Payment', 'tour-booking-manager'),
+						'sub' => __('Paid through this plugin', 'tour-booking-manager'),
+					),
+					'woocommerce' => array(
+						'title' => __('WooCommerce Checkout', 'tour-booking-manager'),
+						'sub' => __('WooCommerce cart and checkout', 'tour-booking-manager'),
+					),
+				);
+				$info_icon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>';
 				?>
-                <div class="ttbm-booking-mode <?php echo $can_choose ? '' : 'is-locked'; ?>" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_save_booking_mode')); ?>" data-can-choose="<?php echo $can_choose ? '1' : '0'; ?>">
-                    <div class="ttbm-booking-mode-head">
-                        <h3><?php esc_html_e('Booking Mode', 'tour-booking-manager'); ?></h3>
-						<?php if ($can_choose) : ?>
-                            <p><?php esc_html_e('Choose exactly one flow to process bookings. This single switch decides everything below, so WooCommerce and Custom Payment never both try to handle the same booking. Your choice is saved instantly.', 'tour-booking-manager'); ?></p>
-						<?php elseif ('woocommerce_only' === $availability) : ?>
-                            <p class="ttbm-booking-mode-auto"><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e('WooCommerce is the only booking flow available right now, so bookings are processed through it automatically.', 'tour-booking-manager'); ?></p>
-						<?php else : ?>
-                            <p class="ttbm-booking-mode-auto"><span class="dashicons dashicons-yes-alt"></span> <?php esc_html_e('Custom Payment is the only booking flow available right now — WooCommerce is not active, so bookings are processed through Custom Payment automatically. Activate WooCommerce to unlock a mode switch here.', 'tour-booking-manager'); ?></p>
-						<?php endif; ?>
-                    </div>
-                    <div class="ttbm-booking-mode-cards">
-                        <div class="ttbm-booking-mode-card <?php echo $is_wc ? 'is-active' : ''; ?> <?php echo $wc_active ? '' : 'is-disabled'; ?>" data-mode="woocommerce" data-subtab="woocommerce">
-                            <span class="ttbm-booking-mode-card-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" role="img" focusable="false">
-                                    <path d="M3 4h2.2l2.1 9.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 7H6"></path>
-                                    <circle cx="10" cy="19" r="1.4"></circle>
-                                    <circle cx="18" cy="19" r="1.4"></circle>
-                                </svg>
-                            </span>
-                            <div class="ttbm-booking-mode-card-body">
-                                <div class="ttbm-booking-mode-card-head">
-                                    <span class="ttbm-booking-mode-card-title"><?php esc_html_e('WooCommerce Checkout', 'tour-booking-manager'); ?></span>
-									<?php if ($is_wc) : ?>
-                                        <span class="ttbm-booking-mode-badge"><?php esc_html_e('Active', 'tour-booking-manager'); ?></span>
-									<?php endif; ?>
-                                </div>
-                                <p class="ttbm-booking-mode-card-desc">
-									<?php if ($wc_active) : ?>
-										<?php esc_html_e('Bookings go through the WooCommerce cart and checkout, using WooCommerce\'s own payment gateways.', 'tour-booking-manager'); ?>
-									<?php else : ?>
-										<?php esc_html_e('Requires WooCommerce to be active.', 'tour-booking-manager'); ?>
-									<?php endif; ?>
-                                </p>
-								<?php if (!$wc_active) : ?>
-									<button type="button" class="button button-primary ttbm-woo-install-trigger ttbm-booking-mode-card-cta">
-										<?php echo esc_html($this->wc_install_button_label()); ?>
-									</button>
-								<?php endif; ?>
-                            </div>
-                        </div>
-                        <div class="ttbm-booking-mode-card <?php echo $is_custom ? 'is-active' : ''; ?> <?php echo $custom_active ? '' : 'is-disabled'; ?>" data-mode="custom" data-subtab="custom">
-                            <span class="ttbm-booking-mode-card-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" role="img" focusable="false">
-                                    <circle cx="12" cy="12" r="8.5"></circle>
-                                    <path d="M14.8 8.7c-.6-.6-1.5-.9-2.5-.9-1.5 0-2.7.8-2.7 2s1 1.8 2.7 2.2c1.7.4 2.7 1 2.7 2.2s-1.2 2-2.8 2c-1.1 0-2.2-.4-2.9-1.1M12.2 6.2v11.6"></path>
-                                </svg>
-                            </span>
-                            <div class="ttbm-booking-mode-card-body">
-                                <div class="ttbm-booking-mode-card-head">
-                                    <span class="ttbm-booking-mode-card-title"><?php esc_html_e('Custom Payment', 'tour-booking-manager'); ?></span>
-									<?php if ($is_custom) : ?>
-                                        <span class="ttbm-booking-mode-badge"><?php esc_html_e('Active', 'tour-booking-manager'); ?></span>
-									<?php endif; ?>
-                                </div>
-                                <p class="ttbm-booking-mode-card-desc">
-									<?php if ($custom_active) : ?>
-										<?php esc_html_e('Offline Payment is included in Free. PayPal and Stripe require PRO — no WooCommerce needed.', 'tour-booking-manager'); ?>
-									<?php else : ?>
-										<?php esc_html_e('Custom Payment is not available.', 'tour-booking-manager'); ?>
-									<?php endif; ?>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="ttbm-booking-mode-msg" aria-live="polite"></p>
-                    <div class="ttbm-booking-mode-warning-slot">
-						<?php if (!$has_gateway) : ?>
-                            <div class="ttbm-booking-mode-warning">
-                                <span class="dashicons dashicons-warning"></span>
-                                <p><?php echo esc_html(self::gateway_warning($mode)); ?></p>
-                            </div>
-						<?php endif; ?>
-                    </div>
-                </div>
+				<section class="ttbm-pset-section" aria-labelledby="ttbm-pset-checkout-title">
+					<h3 class="ttbm-pset-heading" id="ttbm-pset-checkout-title"><?php esc_html_e('Checkout', 'tour-booking-manager'); ?></h3>
+					<p class="ttbm-pset-lead">
+						<?php echo $can_choose
+							? esc_html__('Pick how guests pay. Only one checkout is used at a time, and switching changes it right away.', 'tour-booking-manager')
+							: esc_html__('Pick how guests pay. Only one checkout is used at a time.', 'tour-booking-manager'); ?>
+					</p>
+					<div class="ttbm-pset-tabs" role="tablist" aria-labelledby="ttbm-pset-checkout-title"<?php echo $can_choose ? ' data-pset-mode-group data-nonce="' . esc_attr(wp_create_nonce('ttbm_save_booking_mode')) . '"' : ''; ?>>
+						<?php foreach ($modes as $key => $info) :
+							$selected = $mode === $key;
+							if ($selected) {
+								$badge = array('is-use', __('In use', 'tour-booking-manager'));
+							} elseif (!$available[$key]) {
+								$badge = array('is-off', __('Not active', 'tour-booking-manager'));
+							} else {
+								$badge = array('', '');
+							}
+							?>
+							<button type="button" role="tab" id="ttbm-pset-tab-<?php echo esc_attr($key); ?>" aria-controls="ttbm-pset-tabpanel-<?php echo esc_attr($key); ?>" aria-selected="<?php echo $selected ? 'true' : 'false'; ?>" tabindex="<?php echo $selected ? '0' : '-1'; ?>" class="ttbm-pset-tab<?php echo $can_choose ? ' ttbm-booking-mode-card' : ''; ?><?php echo $selected ? ' is-active' : ''; ?>" data-mode="<?php echo esc_attr($key); ?>" data-subtab="<?php echo esc_attr($key); ?>">
+								<span class="ttbm-pset-tab__icon" aria-hidden="true"><?php echo $icons[$key]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG markup ?></span>
+								<span class="ttbm-pset-tab__copy">
+									<span class="ttbm-pset-tab__title">
+										<b class="ttbm-booking-mode-card-title"><?php echo esc_html($info['title']); ?></b>
+										<span class="ttbm-pset-badge <?php echo esc_attr($badge[0]); ?>" data-pset-badge><?php echo esc_html($badge[1]); ?></span>
+									</span>
+									<span class="ttbm-pset-tab__sub"><?php echo esc_html($info['sub']); ?></span>
+								</span>
+							</button>
+						<?php endforeach; ?>
+					</div>
+					<?php foreach ($modes as $key => $info) : ?>
+						<div class="ttbm-pset-tabpanel" role="tabpanel" id="ttbm-pset-tabpanel-<?php echo esc_attr($key); ?>" aria-labelledby="ttbm-pset-tab-<?php echo esc_attr($key); ?>"<?php echo $mode === $key ? '' : ' hidden'; ?>>
+							<?php if ('woocommerce' === $key && !$wc_active) : ?>
+								<span class="ttbm-pset-tabpanel__text">
+									<span class="ttbm-pset-tabpanel__icon is-warn" aria-hidden="true"><?php echo $info_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG markup ?></span>
+									<span><b><?php esc_html_e('WooCommerce isn\'t active.', 'tour-booking-manager'); ?></b> <?php esc_html_e('Activate it to take bookings through its cart and checkout.', 'tour-booking-manager'); ?></span>
+								</span>
+								<button type="button" class="ttbm-woo-install-trigger ttbm-pset-btn ttbm-pset-btn--primary">
+									<?php echo file_exists(WP_PLUGIN_DIR . '/woocommerce/woocommerce.php')
+										? esc_html__('Activate WooCommerce', 'tour-booking-manager')
+										: esc_html__('Install WooCommerce', 'tour-booking-manager'); ?>
+								</button>
+							<?php elseif ('custom' === $key && !$available['custom']) : ?>
+								<span class="ttbm-pset-tabpanel__text">
+									<span class="ttbm-pset-tabpanel__icon is-warn" aria-hidden="true"><?php echo $info_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG markup ?></span>
+									<span><?php esc_html_e('Custom Payment isn\'t available on this site.', 'tour-booking-manager'); ?></span>
+								</span>
+							<?php else : ?>
+								<span class="ttbm-pset-tabpanel__text">
+									<span class="ttbm-pset-tabpanel__icon" aria-hidden="true"><?php echo $info_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG markup ?></span>
+									<span><?php
+										if ('woocommerce' === $key) {
+											esc_html_e('Bookings go through the WooCommerce cart and checkout, with its payment methods.', 'tour-booking-manager');
+										} elseif ($wc_active) {
+											esc_html_e('Guests pay with the methods you turn on below, such as Offline Payment, without the WooCommerce cart.', 'tour-booking-manager');
+										} else {
+											esc_html_e('Guests pay with the methods you turn on below, such as Offline Payment. No WooCommerce needed.', 'tour-booking-manager');
+										}
+										?></span>
+								</span>
+							<?php endif; ?>
+						</div>
+					<?php endforeach; ?>
+				</section>
 				<?php
 			}
 			private function render_woocommerce_subtab() {
@@ -832,157 +916,191 @@ JS;
                 </div>
 				<?php
 			}
+			/**
+			 * Custom Payment settings: the payment methods (Offline Payment switches on
+			 * right here; PayPal and Stripe come with PRO), the booking rules, and one
+			 * Save button for everything on this panel.
+			 */
 			private function render_custom_payment_subtab() {
 				$specs = $this->gateway_specs();
 				$opts = (array) get_option('ttbm_payment_settings', array());
 				$is_pro = $this->is_pro_active();
 				$allow_guest_booking = $this->opt('ttbm_payment_allow_guest_booking', 'yes');
+				$confirmation_page = (int) $this->opt('ttbm_payment_confirmation_page', 0);
+				$pro_url = 'https://mage-people.com/product/woocommerce-tour-and-travel-booking-manager-pro/';
+				$order = array_unique(array_merge(array('offline'), array_keys($specs)));
 				?>
-                <h4 class="ttbm-pm-section-title"><?php esc_html_e('Payment gateways', 'tour-booking-manager'); ?></h4>
-                <div class="ttbm-pm-wrap ttbm-pm-gateways">
-					<?php foreach ($specs as $gateway_id => $spec) :
-						$is_enabled = isset($opts[$spec['enable_key']]) && $opts[$spec['enable_key']] === 'on';
-						$locked = !empty($spec['pro']) && !$is_pro;
-						?>
-                        <div class="ttbm-pm-card ttbm-pm-card-<?php echo esc_attr($gateway_id); ?> <?php echo $is_enabled ? 'is-enabled' : 'is-disabled'; ?><?php echo $locked ? ' is-locked' : ''; ?>" data-gateway-id="<?php echo esc_attr($gateway_id); ?>">
-                            <div class="ttbm-pm-head">
-                                <div class="ttbm-pm-head-main">
-									<span class="ttbm-pm-icon" aria-hidden="true">
-										<?php echo self::gateway_card_icon($gateway_id); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG markup ?>
+				<section class="ttbm-pset-section" aria-labelledby="ttbm-pset-methods-title">
+					<h3 class="ttbm-pset-heading" id="ttbm-pset-methods-title"><?php esc_html_e('Payment methods', 'tour-booking-manager'); ?></h3>
+					<div class="ttbm-pset-list">
+						<?php foreach ($order as $gateway_id) :
+							if (!isset($specs[$gateway_id])) {
+								continue;
+							}
+							$spec = $specs[$gateway_id];
+							$is_enabled = isset($opts[$spec['enable_key']]) && 'on' === $opts[$spec['enable_key']];
+							$locked = !empty($spec['pro']) && !$is_pro;
+							$inline = 'offline' === $gateway_id;
+							$switch_id = 'ttbm-pset-' . $gateway_id;
+							?>
+							<div class="ttbm-pset-method<?php echo $is_enabled ? ' is-on' : ''; ?><?php echo $locked ? ' is-locked' : ''; ?>" data-gateway-id="<?php echo esc_attr($gateway_id); ?>">
+								<div class="ttbm-pset-row">
+									<span class="ttbm-pset-row__main">
+										<span class="ttbm-pset-icon-box" aria-hidden="true"><?php echo self::gateway_card_icon($gateway_id); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG markup ?></span>
+										<span class="ttbm-pset-row__copy">
+											<span class="ttbm-pset-title-row">
+												<?php if ($inline) : ?>
+													<label class="ttbm-pset-title" for="<?php echo esc_attr($switch_id); ?>"><?php echo esc_html($spec['label']); ?></label>
+												<?php else : ?>
+													<b class="ttbm-pset-title"><?php echo esc_html($spec['label']); ?></b>
+												<?php endif; ?>
+												<?php if (!empty($spec['pro'])) : ?>
+													<span class="ttbm-pset-pro"><?php esc_html_e('PRO', 'tour-booking-manager'); ?></span>
+												<?php endif; ?>
+											</span>
+											<span class="ttbm-pset-desc"><?php echo esc_html($spec['desc']); ?></span>
+										</span>
 									</span>
-									<div class="ttbm-pm-head-copy">
-										<div class="ttbm-pm-title-row">
-											<span class="ttbm-pm-title"><?php echo esc_html($spec['label']); ?></span>
-											<?php if ($locked) : ?>
-												<span class="ttbm-pm-pro-badge"><?php esc_html_e('PRO', 'tour-booking-manager'); ?></span>
-											<?php else : ?>
-												<span class="ttbm-pm-badge"><?php echo $is_enabled ? esc_html__('Enabled', 'tour-booking-manager') : esc_html__('Disabled', 'tour-booking-manager'); ?></span>
-											<?php endif; ?>
-										</div>
-										<p class="ttbm-pm-desc"><?php echo esc_html($spec['desc']); ?></p>
+									<?php if ($locked) : ?>
+										<a class="ttbm-pset-link" href="<?php echo esc_url($pro_url); ?>" target="_blank" rel="noopener noreferrer">
+											<?php esc_html_e('Get PRO', 'tour-booking-manager'); ?>
+											<span class="screen-reader-text"><?php
+												/* translators: %s: payment method name, e.g. PayPal */
+												echo esc_html(sprintf(__('to use %s (opens in a new tab)', 'tour-booking-manager'), $spec['label'])); ?></span>
+										</a>
+									<?php elseif ($inline) : ?>
+										<span class="ttbm-pset-switch-wrap">
+											<span class="ttbm-pset-state" data-pset-state aria-hidden="true"><?php echo $is_enabled ? esc_html__('On', 'tour-booking-manager') : esc_html__('Off', 'tour-booking-manager'); ?></span>
+											<button type="button" id="<?php echo esc_attr($switch_id); ?>" class="ttbm-pset-switch" role="switch" aria-checked="<?php echo $is_enabled ? 'true' : 'false'; ?>" data-field="<?php echo esc_attr($spec['enable_key']); ?>"><span aria-hidden="true"></span></button>
+										</span>
+									<?php else : ?>
+										<span class="ttbm-pset-switch-wrap">
+											<span class="ttbm-pset-state" data-pset-state><?php echo $is_enabled ? esc_html__('On', 'tour-booking-manager') : esc_html__('Off', 'tour-booking-manager'); ?></span>
+											<button type="button" class="ttbm-pset-btn" data-ttbm-gw-modal="ttbm-gw-modal-<?php echo esc_attr($gateway_id); ?>">
+												<?php esc_html_e('Set up', 'tour-booking-manager'); ?>
+												<span class="screen-reader-text"><?php echo esc_html($spec['label']); ?></span>
+											</button>
+										</span>
+									<?php endif; ?>
+								</div>
+								<?php if ($inline) : ?>
+									<div class="ttbm-pset-method__detail"<?php echo $is_enabled ? '' : ' hidden'; ?>>
+										<?php foreach ($spec['fields'] as $field) :
+											if ('toggle' === $field['type']) {
+												continue;
+											}
+											$field_id = 'ttbm-pset-' . $field['key'];
+											$value = isset($opts[$field['key']]) ? $opts[$field['key']] : '';
+											?>
+											<label class="ttbm-pset-label" for="<?php echo esc_attr($field_id); ?>"><?php echo esc_html('ttbm_offline_label' === $field['key'] ? __('Name guests see', 'tour-booking-manager') : $field['label']); ?></label>
+											<input type="<?php echo esc_attr($field['type']); ?>" id="<?php echo esc_attr($field_id); ?>" class="ttbm-pset-input" data-field="<?php echo esc_attr($field['key']); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr__('Offline Payment', 'tour-booking-manager'); ?>">
+											<span class="ttbm-pset-hint"><?php esc_html_e('For example "Bank transfer" or "Pay at venue".', 'tour-booking-manager'); ?></span>
+										<?php endforeach; ?>
 									</div>
-                                </div>
-								<?php if (!$locked) : ?>
-                                    <button type="button" class="button ttbm-pm-configure-btn" data-modal="ttbm-gw-modal-<?php echo esc_attr($gateway_id); ?>">
-										<span class="dashicons dashicons-admin-generic" aria-hidden="true"></span>
-										<?php esc_html_e('Configure', 'tour-booking-manager'); ?>
-									</button>
-								<?php else : ?>
-                                    <button type="button" class="button ttbm-pm-locked-btn" disabled><?php esc_html_e('Requires PRO', 'tour-booking-manager'); ?></button>
 								<?php endif; ?>
-                            </div>
-                        </div>
-					<?php endforeach; ?>
-                </div>
+							</div>
+						<?php endforeach; ?>
+					</div>
+				</section>
 
 				<?php foreach ($specs as $gateway_id => $spec) :
-					if (!empty($spec['pro']) && !$is_pro) {
-						continue; // Locked behind Pro — no modal to configure yet.
+					// PayPal and Stripe keep their own setup popup (keys, test mode); only with PRO.
+					if ('offline' === $gateway_id || empty($spec['pro']) || !$is_pro) {
+						continue;
 					}
 					$is_enabled = isset($opts[$spec['enable_key']]) && $opts[$spec['enable_key']] === 'on';
 					?>
-                    <div id="ttbm-gw-modal-<?php echo esc_attr($gateway_id); ?>" class="ttbm-gw-modal" style="display:none;">
-                        <div class="ttbm-gw-modal-box">
-                            <div class="ttbm-gw-modal-header">
-                                <h2><?php echo esc_html($spec['label']); ?> <?php esc_html_e('Configuration', 'tour-booking-manager'); ?></h2>
-                                <button type="button" class="ttbm-gw-modal-close">&times;</button>
-                            </div>
-                            <div class="ttbm-gw-modal-body">
-                                <div class="ttbm-gw-toggle-row">
-                                    <div>
-                                        <div class="ttbm-gw-toggle-label"><?php
+					<div id="ttbm-gw-modal-<?php echo esc_attr($gateway_id); ?>" class="ttbm-gw-modal" style="display:none;">
+						<div class="ttbm-gw-modal-box">
+							<div class="ttbm-gw-modal-header">
+								<h2><?php echo esc_html($spec['label']); ?> <?php esc_html_e('Configuration', 'tour-booking-manager'); ?></h2>
+								<button type="button" class="ttbm-gw-modal-close" aria-label="<?php esc_attr_e('Close', 'tour-booking-manager'); ?>">&times;</button>
+							</div>
+							<div class="ttbm-gw-modal-body">
+								<div class="ttbm-gw-toggle-row">
+									<div>
+										<div class="ttbm-gw-toggle-label"><?php
 											/* translators: %s: gateway name, e.g. PayPal */
 											echo esc_html(sprintf(__('Enable %s', 'tour-booking-manager'), $spec['label'])); ?></div>
-                                        <div class="ttbm-gw-toggle-sub"><?php echo esc_html($spec['desc']); ?></div>
-                                    </div>
-                                    <label class="ttbm-gw-switch">
-                                        <input type="checkbox" data-field="<?php echo esc_attr($spec['enable_key']); ?>" <?php checked($is_enabled); ?>>
-                                        <span class="ttbm-gw-slider"></span>
-                                    </label>
-                                </div>
+										<div class="ttbm-gw-toggle-sub"><?php echo esc_html($spec['desc']); ?></div>
+									</div>
+									<label class="ttbm-gw-switch">
+										<input type="checkbox" data-field="<?php echo esc_attr($spec['enable_key']); ?>" <?php checked($is_enabled); ?>>
+										<span class="ttbm-gw-slider"></span>
+									</label>
+								</div>
 								<?php foreach ($spec['fields'] as $field) :
 									$value = isset($opts[$field['key']]) ? $opts[$field['key']] : '';
 									?>
 									<?php if ('toggle' === $field['type']) : ?>
-                                        <div class="ttbm-gw-toggle-row">
-                                            <div>
-                                                <div class="ttbm-gw-toggle-label"><?php echo esc_html($field['label']); ?></div>
+										<div class="ttbm-gw-toggle-row">
+											<div>
+												<div class="ttbm-gw-toggle-label"><?php echo esc_html($field['label']); ?></div>
 												<?php if (!empty($field['desc'])) : ?>
-                                                    <div class="ttbm-gw-toggle-sub"><?php echo esc_html($field['desc']); ?></div>
+													<div class="ttbm-gw-toggle-sub"><?php echo esc_html($field['desc']); ?></div>
 												<?php endif; ?>
-                                            </div>
-                                            <label class="ttbm-gw-switch">
-                                                <input type="checkbox" data-field="<?php echo esc_attr($field['key']); ?>" <?php checked($value === 'on'); ?>>
-                                                <span class="ttbm-gw-slider"></span>
-                                            </label>
-                                        </div>
+											</div>
+											<label class="ttbm-gw-switch">
+												<input type="checkbox" data-field="<?php echo esc_attr($field['key']); ?>" <?php checked($value === 'on'); ?>>
+												<span class="ttbm-gw-slider"></span>
+											</label>
+										</div>
 									<?php else : ?>
-                                        <div class="ttbm-gw-field">
-                                            <label class="ttbm-gw-label"><?php echo esc_html($field['label']); ?></label>
-                                            <input type="<?php echo esc_attr($field['type']); ?>" data-field="<?php echo esc_attr($field['key']); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($field['placeholder'] ?? ''); ?>">
+										<div class="ttbm-gw-field">
+											<label class="ttbm-gw-label"><?php echo esc_html($field['label']); ?></label>
+											<input type="<?php echo esc_attr($field['type']); ?>" data-field="<?php echo esc_attr($field['key']); ?>" value="<?php echo esc_attr($value); ?>" placeholder="<?php echo esc_attr($field['placeholder'] ?? ''); ?>">
 											<?php if (!empty($field['desc'])) : ?>
-                                                <p class="ttbm-gw-field-desc"><?php echo esc_html($field['desc']); ?></p>
+												<p class="ttbm-gw-field-desc"><?php echo esc_html($field['desc']); ?></p>
 											<?php endif; ?>
-                                        </div>
+										</div>
 									<?php endif; ?>
 								<?php endforeach; ?>
-                            </div>
-                            <div class="ttbm-gw-modal-footer">
-                                <button type="button" class="button button-primary ttbm-gw-save-btn" data-gateway="<?php echo esc_attr($gateway_id); ?>"><?php
+							</div>
+							<div class="ttbm-gw-modal-footer">
+								<button type="button" class="button button-primary ttbm-gw-save-btn" data-gateway="<?php echo esc_attr($gateway_id); ?>"><?php
 									/* translators: %s: gateway name, e.g. PayPal */
 									echo esc_html(sprintf(__('Save %s Settings', 'tour-booking-manager'), $spec['label'])); ?></button>
-                                <span class="ttbm-gw-save-msg"></span>
-                            </div>
-                        </div>
-                    </div>
+								<span class="ttbm-gw-save-msg"></span>
+							</div>
+						</div>
+					</div>
 				<?php endforeach; ?>
 
-				<?php
-				$confirmation_page = (int) $this->opt('ttbm_payment_confirmation_page', 0);
-				?>
-                <div class="ttbm-pay-accordion">
-                    <button type="button" class="ttbm-pay-acc-header" data-acc="custom-additional">
-                        <span><?php esc_html_e('Additional Settings', 'tour-booking-manager'); ?></span>
-                        <span class="dashicons dashicons-arrow-down-alt2"></span>
-                    </button>
-                    <div class="ttbm-pay-acc-body" data-acc-body="custom-additional" style="display:none;">
-                        <div class="ttbm-pay-field-row ttbm-pay-confirmation-page">
-                            <label class="ttbm-pay-field-label"><?php esc_html_e('Booking Confirmation Page', 'tour-booking-manager'); ?></label>
-                            <div class="ttbm-pay-field-control">
-								<?php
-								// wp_dropdown_pages() already escapes its own output; wp_kses_post()
-								// would strip <select>/<option> entirely since they're not in its
-								// allowed-HTML list, leaving just a jumble of page-title text.
-								echo wp_dropdown_pages(array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-									'selected' => $confirmation_page,
-									'name' => 'ttbm_payment_settings[ttbm_payment_confirmation_page]',
-									'class' => 'formControl',
-									'show_option_none' => esc_html__('— Select a page —', 'tour-booking-manager'),
-									'option_none_value' => 0,
-									'echo' => 0,
-								));
-								?>
-                                <p class="ttbm-pay-field-desc"><?php esc_html_e('Used only by the Custom Payment checkout. Regular WooCommerce bookings always use WooCommerce\'s own order-received page.', 'tour-booking-manager'); ?></p>
-                            </div>
-                        </div>
-                        <div class="ttbm-pay-field-row">
-                            <label class="ttbm-pay-field-label"><?php esc_html_e('Allow Guest Booking', 'tour-booking-manager'); ?></label>
-                            <div class="ttbm-pay-field-control">
-                                <select name="ttbm_payment_settings[ttbm_payment_allow_guest_booking]" class="formControl">
-                                    <option value="yes" <?php selected($allow_guest_booking, 'yes'); ?>><?php esc_html_e('Yes — anyone can book without an account', 'tour-booking-manager'); ?></option>
-                                    <option value="no" <?php selected($allow_guest_booking, 'no'); ?>><?php esc_html_e('No — require login or registration to book', 'tour-booking-manager'); ?></option>
-                                </select>
-                                <p class="ttbm-pay-field-desc"><?php esc_html_e('Custom Payment only. When set to No, a logged-out visitor sees an inline log in / register panel when they click to book. WooCommerce checkout has its own guest-checkout setting.', 'tour-booking-manager'); ?></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ttbm-pay-misc-save-row ttbm-pay-misc-save-footer">
-                    <button type="button" class="button button-primary ttbm-pay-misc-save-btn" data-fields="ttbm_payment_confirmation_page,ttbm_payment_allow_guest_booking" data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_admin_nonce')); ?>">
-						<span class="dashicons dashicons-saved" aria-hidden="true"></span>
-						<?php esc_html_e('Save Changes', 'tour-booking-manager'); ?>
-					</button>
-                </div>
+				<section class="ttbm-pset-section" aria-labelledby="ttbm-pset-rules-title">
+					<h3 class="ttbm-pset-heading" id="ttbm-pset-rules-title"><?php esc_html_e('Booking rules', 'tour-booking-manager'); ?></h3>
+					<div class="ttbm-pset-fields">
+						<div class="ttbm-pset-field">
+							<label class="ttbm-pset-label" for="ttbm-pset-confirm"><?php esc_html_e('Confirmation page', 'tour-booking-manager'); ?></label>
+							<?php
+							// wp_dropdown_pages() already escapes its own output.
+							echo wp_dropdown_pages(array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								'selected' => $confirmation_page,
+								'name' => 'ttbm_payment_settings[ttbm_payment_confirmation_page]',
+								'id' => 'ttbm-pset-confirm',
+								'class' => 'ttbm-pset-select',
+								'show_option_none' => esc_html__('Choose a page', 'tour-booking-manager'),
+								'option_none_value' => 0,
+								'echo' => 0,
+							));
+							?>
+							<span class="ttbm-pset-hint"><?php esc_html_e('Where guests land after booking.', 'tour-booking-manager'); ?></span>
+						</div>
+						<div class="ttbm-pset-field">
+							<label class="ttbm-pset-label" for="ttbm-pset-guest"><?php esc_html_e('Guest booking', 'tour-booking-manager'); ?></label>
+							<select id="ttbm-pset-guest" class="ttbm-pset-select" name="ttbm_payment_settings[ttbm_payment_allow_guest_booking]">
+								<option value="yes" <?php selected($allow_guest_booking, 'yes'); ?>><?php esc_html_e('Anyone can book', 'tour-booking-manager'); ?></option>
+								<option value="no" <?php selected($allow_guest_booking, 'no'); ?>><?php esc_html_e('Require an account', 'tour-booking-manager'); ?></option>
+							</select>
+							<span class="ttbm-pset-hint"><?php esc_html_e('With an account required, guests log in when they book.', 'tour-booking-manager'); ?></span>
+						</div>
+					</div>
+				</section>
+
+				<div class="ttbm-pset-footer">
+					<span class="ttbm-pset-footer__msg" data-pset-msg role="status" aria-live="polite"></span>
+					<button type="button" class="ttbm-pset-btn ttbm-pset-cancel" data-pset-cancel><?php esc_html_e('Cancel', 'tour-booking-manager'); ?></button>
+					<button type="button" class="ttbm-pset-btn ttbm-pset-btn--primary" data-pset-save data-nonce="<?php echo esc_attr(wp_create_nonce('ttbm_admin_nonce')); ?>"><?php esc_html_e('Save changes', 'tour-booking-manager'); ?></button>
+				</div>
 				<?php
 			}
 			/**
@@ -1104,11 +1222,14 @@ JS;
 			 * reloading the current tour/hotel edit request.
 			 */
 			private function payment_state_response(): array {
+				list(, $status_title, $status_text) = self::status_copy();
 				return array(
 					'has_gateway' => self::has_functional_payment_method(),
 					'warning' => self::gateway_warning(),
 					'mode_label' => self::get_booking_mode_label(),
 					'gateway_names' => self::get_active_gateway_names(),
+					'status_title' => $status_title,
+					'status_text' => $status_text,
 				);
 			}
 			/**
@@ -1212,10 +1333,15 @@ JS;
 					$existing[$key] = isset($posted[$key]) ? sanitize_text_field($posted[$key]) : '';
 				}
 				update_option('ttbm_payment_settings', $existing);
-				wp_send_json_success(array(
+				// The gateway objects read the option when they are built, so rebuild them
+				// before reporting whether guests can now pay.
+				if (class_exists('TTBM_Payment_Gateway_Manager') && method_exists('TTBM_Payment_Gateway_Manager', 'reset')) {
+					TTBM_Payment_Gateway_Manager::reset();
+				}
+				wp_send_json_success(array_merge(array(
 					'message' => esc_html__('Settings saved successfully!', 'tour-booking-manager'),
 					'enabled' => $existing[$spec['enable_key']],
-				));
+				), $this->payment_state_response()));
 			}
 			/**
 			 * Saves the "Confirm Ticket Based on Payment Status" checkboxes from

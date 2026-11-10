@@ -38,22 +38,7 @@
 					wp_enqueue_script('wc-jquery-tiptip');
 				}
 				wp_enqueue_script('ttbm-payment-settings', TTBM_PLUGIN_URL . '/assets/admin/ttbm-payment-settings.js', array('jquery', 'ttbm_hotel_booking', 'ttbm-admin-toast'), filemtime(TTBM_PLUGIN_DIR . '/assets/admin/ttbm-payment-settings.js'), true);
-				wp_localize_script('ttbm-payment-settings', 'ttbmPaymentSettings', array(
-					'enabled_label' => esc_html__('Enabled', 'tour-booking-manager'),
-					'disabled_label' => esc_html__('Disabled', 'tour-booking-manager'),
-					'error_label' => esc_html__('An error occurred. Please try again.', 'tour-booking-manager'),
-					'saving_label' => esc_html__('Saving…', 'tour-booking-manager'),
-					/* translators: %s: booking mode name, e.g. "WooCommerce Checkout" */
-					'mode_saved_label' => esc_html__('Booking mode changed to %s.', 'tour-booking-manager'),
-					'wc_mode_label' => esc_html__('WooCommerce Checkout', 'tour-booking-manager'),
-					'custom_mode_label' => esc_html__('Custom Payment', 'tour-booking-manager'),
-					'active_label' => esc_html__('Active', 'tour-booking-manager'),
-					'payment_notice_kicker' => esc_html__('Payment setup required', 'tour-booking-manager'),
-					'payment_notice_title' => esc_html__('Bookings cannot accept payments yet', 'tour-booking-manager'),
-					'enable_offline_label' => esc_html__('Enable Offline Payment', 'tour-booking-manager'),
-					'configure_wc_label' => esc_html__('Configure WooCommerce Payments', 'tour-booking-manager'),
-					'payment_settings_url' => admin_url('edit.php?post_type=ttbm_tour&page=ttbm_settings_page#ttbm_payment_settings'),
-				));
+				wp_localize_script('ttbm-payment-settings', 'ttbmPaymentSettings', TTBM_Payment_Settings::script_strings());
 			}
 			public function global_settings_menu() {
 				$label = TTBM_Function::get_name();

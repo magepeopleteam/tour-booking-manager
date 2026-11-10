@@ -1165,6 +1165,50 @@ div.ttbm_wraper .owl-theme .owl-nav {
 	padding: 0;
 }
 
+/* ---------- Booking not open yet: disabled Book Now + note ---------- */
+.ttbm_book_now--unavailable,
+.ttbm_book_now--unavailable:hover,
+.ttbm_book_now--unavailable:focus {
+	opacity: 0.55;
+	cursor: not-allowed !important;
+	transform: none !important;
+	box-shadow: none !important;
+}
+.ttbm_booking_note {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 12px 0 0;
+	padding: 10px 12px;
+	border-radius: 8px;
+	background: #fff7ed;
+	color: #7c2d12;
+	font-size: 13px;
+	line-height: 1.5;
+	text-align: left;
+}
+.ttbm_booking_note__icon {
+	flex: none;
+	display: inline-flex;
+	margin-top: 2px;
+	color: #c2410c;
+}
+.ttbm_booking_note__admin {
+	display: block;
+	margin-top: 4px;
+	color: #7c2d12;
+}
+.ttbm_booking_note__admin a {
+	color: #9a3412;
+	font-weight: 600;
+	text-decoration: underline;
+}
+.ttbm_book_now_bar .ttbm_booking_note {
+	flex-basis: 100%;
+}
+
 /* ---------- Modern booking status empty states ---------- */
 .ttbm_booking_panel .ttbm_booking_status {
 	display: flex;

@@ -5,16 +5,19 @@
 	$ttbm_post_id = $ttbm_post_id ?? get_the_id();
 	$tour_id=$tour_id??TTBM_Function::post_id_multi_language($ttbm_post_id);
 	$ttbm_product_id = TTBM_Global_Function::get_post_info( $tour_id, 'link_wc_product' );
-	if ( empty( $ttbm_product_id ) && ! TTBM_Global_Function::has_woocommerce() && apply_filters( 'ttbm_booking_available', false, $tour_id ) ) {
+	// Bookable when WooCommerce checkout exists, or when a non-WC checkout (Offline
+	// Payment, Pro's PayPal/Stripe) has a payment method on.
+	$ttbm_booking_open = apply_filters( 'ttbm_booking_available', TTBM_Global_Function::has_woocommerce(), $tour_id );
+	if ( empty( $ttbm_product_id ) && ! TTBM_Global_Function::has_woocommerce() && $ttbm_booking_open ) {
 		// No hidden WC product (WooCommerce was never active) but a non-WC checkout
 		// (Pro custom payment) is available — it resolves the tour from this value.
 		$ttbm_product_id = $tour_id;
 	}
-	if ( ! empty( $ttbm_product_id ) ) {
+	if ( ! empty( $ttbm_product_id ) || ! $ttbm_booking_open ) {
 		// Booking form is always visible, logged in or not — login (if
 		// required) is only enforced when the visitor actually clicks to
 		// book, via the modal below. See render_login_modal()'s docblock.
-		$ttbm_require_login = TTBM_Payment_Settings::login_required_for_booking() && ! is_user_logged_in();
+		$ttbm_require_login = $ttbm_booking_open && TTBM_Payment_Settings::login_required_for_booking() && ! is_user_logged_in();
 		$seat_infos = TTBM_Global_Function::get_post_info( $tour_id, 'ttbma_seat_plan', array());
 		$display = TTBM_Global_Function::get_post_info( $tour_id, 'ttbma_display_seat_plan', 'off' );
 		$display_front_end = TTBM_Global_Function::get_post_info($tour_id, 'frontend_display_seat_plan', 'on');
@@ -36,6 +39,12 @@
 				</div>
 			</div>
 			<div class="ttbm_book_now_actions">
+				<?php if ( ! $ttbm_booking_open ) : ?>
+					<button class="dButton ttbm_book_now ttbm_book_now--unavailable" type="button" disabled>
+						<span class="fas fa-shopping-cart"></span>
+						<?php esc_html_e( 'Book now', 'tour-booking-manager' ); ?>
+					</button>
+				<?php else : ?>
 				<?php do_action('ttbm_before_add_cart_btn', $ttbm_product_id,$tour_id); ?>
 				<?php if(class_exists('TTBMA_Seat_Plan') && $display == 'on' && sizeof($seat_infos)>0 && $display_front_end=='on'){ ?>
 					<button class="dButton ttbm_load_seat_plan" type="submit">
@@ -49,7 +58,11 @@
 				<button type="submit" name="add-to-cart" value="<?php echo esc_attr( $ttbm_product_id ); ?>" class="dNone ttbm_add_to_cart ttbm-confirm-btn">
 					<?php esc_html_e( 'Book Now', 'tour-booking-manager' ); ?>
 				</button>
+				<?php endif; ?>
 			</div>
+			<?php if ( ! $ttbm_booking_open ) : ?>
+				<?php include TTBM_Function::template_path( 'ticket/booking_unavailable_note.php' ); ?>
+			<?php endif; ?>
 			<?php if ( $ttbm_require_login ) : ?>
 				<?php TTBM_Payment_Settings::render_login_modal( $tour_id, 'book_now' ); ?>
 			<?php endif; ?>

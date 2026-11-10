@@ -26,6 +26,14 @@
 				return self::$instance;
 			}
 
+			/**
+			 * Forget the built gateways so the next get_instance() reads the saved
+			 * settings again (used right after the Payments screen saves them).
+			 */
+			public static function reset() {
+				self::$instance = null;
+			}
+
 			private function __construct() {
 				$this->register_gateway(new TTBM_Offline_Gateway());
 				do_action('ttbm_register_payment_gateways', $this);

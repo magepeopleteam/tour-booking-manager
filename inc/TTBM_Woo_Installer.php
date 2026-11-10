@@ -52,29 +52,31 @@ if ( ! class_exists( 'TTBM_Woo_Installer' ) ) {
 		}
 
 		/**
-		 * Runs on admin_init. If the transient from activation exists
-		 * and WooCommerce IS active, redirect to tour list page.
+		 * Runs on admin_init right after the plugin is activated: sends the
+		 * administrator to the tour list, where the dummy tour import popup
+		 * opens. WooCommerce is optional, so this happens with or without it.
 		 */
 		public function handle_activation_redirect() {
 			if ( ! get_transient( 'ttbm_plugin_activated' ) ) {
 				return;
 			}
 
-			if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
-				delete_transient( 'ttbm_plugin_activated' );
+			// Leave the flag for the next normal page load: an AJAX or cron request cannot be redirected.
+			if ( wp_doing_ajax() || wp_doing_cron() ) {
 				return;
 			}
 
-			// WooCommerce is active → redirect immediately
-			if ( $this->is_woo_active() ) {
-				delete_transient( 'ttbm_plugin_activated' );
-				set_transient( 'ttbm_woo_just_activated', true, 300 );
-				wp_safe_redirect( admin_url( 'edit.php?post_type=ttbm_tour&page=ttbm_list' ) );
-				exit;
+			delete_transient( 'ttbm_plugin_activated' );
+
+			// Bulk or network activation: stay on the plugins screen.
+			if ( is_network_admin() || isset( $_GET['activate-multi'] ) || ! current_user_can( 'manage_options' ) ) {
+				return;
 			}
 
-			// WooCommerce is NOT active → clear transient, popup will show
-			delete_transient( 'ttbm_plugin_activated' );
+			// Tells the tour list to open the dummy import popup once.
+			set_transient( 'ttbm_woo_just_activated', true, 300 );
+			wp_safe_redirect( admin_url( 'edit.php?post_type=ttbm_tour&page=ttbm_list' ) );
+			exit;
 		}
 
 		/**

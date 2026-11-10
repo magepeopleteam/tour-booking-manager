@@ -26,8 +26,8 @@ if ( ! class_exists( 'TTBM_Theme_Promo' ) ) {
 		const DISMISS_META = 'ttbm_theme_card_dismissed';
 
 		public function __construct() {
-			add_action( 'ttbm_tour_manager_notices', array( $this, 'render_card' ) );
-			add_action( 'wp_ajax_ttbm_dismiss_theme_card', array( $this, 'ajax_dismiss' ) );
+			// The card is no longer shown on the Tour Manager screen; Travail is offered from its own
+			// menu page (TTBM_Theme_Page), which still uses the helpers in this class.
 		}
 
 		/** 'active' | 'installed' | 'missing' */

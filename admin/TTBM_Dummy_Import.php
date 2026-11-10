@@ -32,21 +32,19 @@
 			}
 			public static function is_eligible() {
 				// WooCommerce is optional — dummy import should work without it.
-				$dummy_post_inserted = get_option('ttbm_dummy_already_inserted', 'no');
-				if ($dummy_post_inserted == 'yes') {
-					return false;
-				}
+				// Eligible while the tour list is empty: same statuses the list shows, so trash does not count.
 				$count_posts = wp_count_posts('ttbm_tour');
-				$count_existing_event = isset($count_posts->publish) ? $count_posts->publish : 0;
-				$plugin_active = self::check_plugin('tour-booking-manager', 'tour-booking-manager.php');
-				if (empty($count_existing_event) && $plugin_active == 1) {
-					return true;
+				foreach (array('publish', 'draft', 'pending', 'future', 'private') as $status) {
+					if (!empty($count_posts->$status)) {
+						return false;
+					}
 				}
-				return false;
+				return self::check_plugin('tour-booking-manager', 'tour-booking-manager.php') == 1;
 			}
 
 			private function should_auto_show_popup() {
-				if (!self::is_eligible()) {
+				// The popup opens by itself only until the first import; after that the button opens it.
+				if (!self::is_eligible() || get_option('ttbm_dummy_already_inserted', 'no') == 'yes') {
 					return false;
 				}
 				// Force-show after WooCommerce was just activated via the installer popup
@@ -272,10 +270,7 @@
 				if (function_exists('wp_raise_memory_limit')) {
 					wp_raise_memory_limit('admin');
 				}
-				$dummy_post_inserted = get_option('ttbm_dummy_already_inserted', 'no');
-				$count_existing_event = wp_count_posts('ttbm_tour')->publish;
-				$plugin_active = self::check_plugin('tour-booking-manager', 'tour-booking-manager.php');
-				if ($count_existing_event == 0 && $plugin_active == 1 && $dummy_post_inserted != 'yes') {
+				if (self::is_eligible()) {
 					$dummy_taxonomies = $this->dummy_taxonomy();
 					if (array_key_exists('taxonomy', $dummy_taxonomies)) {
 						foreach ($dummy_taxonomies['taxonomy'] as $taxonomy => $dummy_taxonomy) {
@@ -312,6 +307,14 @@
 							);
 							unset($post);
 							$post = new WP_Query($args);
+							// On a repeat import the places and guides already exist: link tours to those.
+							foreach ($post->posts as $existing_post) {
+								if ($custom_post === 'ttbm_places') {
+									$place_name_to_id[$existing_post->post_title] = $existing_post->ID;
+								} elseif ($custom_post === 'ttbm_guide') {
+									$guide_name_to_id[$existing_post->post_title] = $existing_post->ID;
+								}
+							}
 							if ($post->post_count == 0) {
 								foreach ($dummy_post as $dummy_data) {
 									$args = array();
@@ -545,9 +548,9 @@
 			 * 5,5,5,5,4.5 - sum 24.5 / 5 = exactly 4.9 - rather than 5 flat 5-star
 			 * reviews, so the average and the (Pro's) rating-distribution bar don't
 			 * look suspiciously uniform. Guarded against a tour that already has
-			 * reviews (defensive - dummy_import() itself only ever runs once per site
-			 * via the 0-existing-tours check above, but this method has no reason to
-			 * assume that will always be its only caller).
+			 * reviews (defensive - dummy_import() itself only runs when the site has
+			 * no tours, but this method has no reason to assume that will always be
+			 * its only caller).
 			 */
 			public function seed_dummy_reviews($tour_id) {
 				if (!$tour_id || get_post_type($tour_id) !== 'ttbm_tour') {

@@ -220,17 +220,6 @@
                     </div>
                     <!--Here Analytics-->
                     <?php do_action('ttbm_travel_analytics_display', $posts_query->found_posts, $analytics_Data )?>
-                    <?php
-                    // Show Import Dummy Data button when popup/JS will also be available
-                    if ( class_exists( 'TTBM_Dummy_Import' ) && \TTBM_Dummy_Import::is_eligible() ) :
-                    ?>
-                    <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
-                        <button type="button" id="ttbm-trigger-dummy-import-btn" style="background-color: #0071a1; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; cursor: pointer; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
-                            <span style="font-size: 16px;">↓</span>
-                            <?php esc_html_e('Import Dummy Data', 'tour-booking-manager'); ?>
-                        </button>
-                    </div>
-                    <?php endif; ?>
                     <?php do_action('ttbm_tour_manager_notices'); ?>
                     <div class="ttbm-tour-dashboard">
                         <div class="ttbm_trvel_lists_tabs">

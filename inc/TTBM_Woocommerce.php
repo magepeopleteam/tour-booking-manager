@@ -109,7 +109,7 @@
 					$hotel_info = self::cart_hotel_info();
 					$cart_item_data['ttbm_hotel_info'] = apply_filters('ttbm_hotel_info_filter', $hotel_info, $product_id);
 					$cart_item_data['ttbm_date'] = isset($_POST['ttbm_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_start_date'])) : '';
-					$cart_item_data['ttbm_end_date'] = isset($_POST['ttbm_end_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_end_date'])) : '';
+					$cart_item_data['ttbm_end_date'] = TTBM_Function::get_travel_end_datetime($product_id, $cart_item_data['ttbm_date']);
 					$cart_item_data['ttbm_ticket_info'] = $ticket_info;
 					$cart_item_data['ttbm_user_info'] = apply_filters('ttbm_user_info_data', array(), $product_id);
 					$cart_item_data['ttbm_extra_service_info'] = self::cart_extra_service_info($product_id);
@@ -260,7 +260,9 @@
 				$extra_service = isset($values['ttbm_extra_service_info']) ? $values['ttbm_extra_service_info'] : [];
 				$user_info = isset($values['ttbm_user_info']) ? $values['ttbm_user_info'] : [];
 				$date = isset($values['ttbm_date']) ? $values['ttbm_date'] : '';
-				$end_date = isset($values['ttbm_end_date']) ? $values['ttbm_end_date'] : '';
+				/* Derived from the schedule, not the cart: carts saved before the
+				   end date was scoped to the date type still hold a stale value. */
+				$end_date = TTBM_Function::get_travel_end_datetime($ttbm_id, $date);
 					$data_format = TTBM_Global_Function::check_time_exit_date($date) ? 'full' : 'date';
 					$start_date = TTBM_Global_Function::date_format($date, $data_format);
 					$end_data_format = TTBM_Global_Function::check_time_exit_date($end_date) ? 'full' : 'date';
@@ -395,7 +397,7 @@
 			$tour_name = TTBM_Function::get_name();
 			$location = TTBM_Global_Function::get_post_info($ttbm_id, 'ttbm_location_name');
 			$date = isset($cart_item['ttbm_date']) ? $cart_item['ttbm_date'] : '';
-			$end_date = isset($cart_item['ttbm_end_date']) ? $cart_item['ttbm_end_date'] : '';
+			$end_date = TTBM_Function::get_travel_end_datetime($ttbm_id, $date);
 			$data_format = TTBM_Global_Function::check_time_exit_date($date) ? 'full' : 'date';
 			$end_data_format = TTBM_Global_Function::check_time_exit_date($end_date) ? 'full' : 'date';
 			$hotel_info = isset($cart_item['ttbm_hotel_info']) ? $cart_item['ttbm_hotel_info'] : array();

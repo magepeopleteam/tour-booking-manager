@@ -5,7 +5,7 @@ Tags: tour booking, travel agency, travel booking, tour operator, hotel booking
 Requires at least: 4.4.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 2.3.13
+Stable tag: 2.3.14
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -231,6 +231,24 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/tour-
 
 
 == Changelog ==
+= 2.3.14 – 11 November 2026 =
+* New: Show dummy tour import button beside Add a tour.
+* New: Always show dummy import button and redesign import popup.
+* New: Redirect to tour list on activation, import button only with no tours.
+* New: Show tickets with a note when no payment method is on.
+* New: Redesign payment settings and turn on Offline Payment by default.
+* New: Redesign the Add-ons page and fix its menu badge.
+* New: Add an MCP page that explains the PRO feature.
+* New: Redesign the Travail Theme page, drop the tour list card.
+* Fix: Stack Global Settings layout on narrow screens.
+* Fix: Add side padding to tour header and FAQ rows.
+* Fix: Add side padding to Travello travel date row.
+* Fix: Add side padding to sidebar ticket price rows.
+* Fix: Align itinerary activity icons and text.
+* Fix: Align itinerary text when activities use paragraphs.
+* Fix: Run dummy import when the plugin folder has another name.
+* Fix: Only show a tour end date the schedule defines.
+
 = 2.3.13 – 9 November 2026 =
 * Fix: Tour orders without a hotel listed as "January 1, 1970" hotel bookings.
 * Fix: Use the tour's step-based editor and stop Area Info overflowing.

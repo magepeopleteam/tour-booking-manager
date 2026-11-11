@@ -2148,6 +2148,43 @@
 				$type = TTBM_Global_Function::get_post_info(self::schedule_source_id($tour_id), 'ttbm_travel_type', 'fixed');
 				return self::cache_set('travel_type', (int) $tour_id, apply_filters('ttbm_tour_type', $type, $tour_id));
 			}
+			/**
+			 * End date (Y-m-d, plus " H:i" when an end time is set) of the departure
+			 * that starts on $start_date, or '' when the schedule does not define one.
+			 *
+			 * Only Fixed tours store one tour-wide end date, and a Particular date row
+			 * stores its own check-out date. Repeated tours have no per-departure end
+			 * date. The Fixed panel's End Date field is still saved, hidden, after a
+			 * tour is switched to another date type, so reading it unconditionally put
+			 * a stale date (often years away) on every cart and order line.
+			 */
+			public static function get_travel_end_datetime($tour_id, $start_date = ''): string {
+				$source_id = self::schedule_source_id($tour_id);
+				$travel_type = self::get_travel_type($tour_id);
+				$end_date = '';
+				$end_time = '';
+				if ($travel_type === 'fixed') {
+					$end_date = (string) TTBM_Global_Function::get_post_info($source_id, 'ttbm_travel_end_date');
+					$end_time = (string) TTBM_Global_Function::get_post_info($source_id, 'ttbm_travel_end_time');
+				} elseif ($travel_type === 'particular' && $start_date && strtotime((string) $start_date) !== false) {
+					$start_day = gmdate('Y-m-d', strtotime((string) $start_date));
+					$rows = TTBM_Global_Function::get_post_info($source_id, 'ttbm_particular_dates', array());
+					foreach ((array) $rows as $row) {
+						if (!is_array($row) || empty($row['ttbm_particular_start_date']) || empty($row['ttbm_particular_end_date'])) {
+							continue;
+						}
+						if (gmdate('Y-m-d', strtotime($row['ttbm_particular_start_date'])) === $start_day) {
+							$end_date = (string) $row['ttbm_particular_end_date'];
+							break;
+						}
+					}
+				}
+				if ($end_date === '' || strtotime($end_date) === false) {
+					return '';
+				}
+				$end_date = gmdate('Y-m-d', strtotime($end_date));
+				return $end_time !== '' ? $end_date . ' ' . $end_time : $end_date;
+			}
 			public static function travel_type_array(): array {
 				return array('fixed' => __('Fixed Dates', 'tour-booking-manager'), 'particular' => __('Particular Dates', 'tour-booking-manager'), 'repeated' => __('Repeated Dates', 'tour-booking-manager'));
 			}

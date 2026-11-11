@@ -385,7 +385,7 @@
 				}
 
 				$start_date = isset($_POST['ttbm_start_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_start_date'])) : '';
-				$end_date = isset($_POST['ttbm_end_date']) ? sanitize_text_field(wp_unslash($_POST['ttbm_end_date'])) : '';
+				$end_date = TTBM_Function::get_travel_end_datetime($tour_id, $start_date);
 				$gateway_id = isset($_POST['ttbm_payment_method']) ? sanitize_key(wp_unslash($_POST['ttbm_payment_method'])) : '';
 				$manager = TTBM_Payment_Gateway_Manager::get_instance();
 				$available = $manager->get_available_gateways();

@@ -141,9 +141,7 @@
 				}
 				$tour_start_datetime = $this->normalize_tour_date($tour_id, $tour_date);
 				$tour_start_datetime = $tour_start_datetime ?: $tour_date;
-				$tour_end_date = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_date');
-				$tour_end_time = TTBM_Global_Function::get_post_info($tour_id, 'ttbm_travel_end_time');
-				$tour_end_datetime = $tour_end_date ? $tour_end_date . ( $tour_end_time ? ' ' . $tour_end_time : '' ) : '';
+				$tour_end_datetime = TTBM_Function::get_travel_end_datetime($tour_id, $tour_start_datetime);
 				if ($tour_date) {
 					$action = apply_filters('ttbm_form_submit_path', '', $tour_id);
 					?>

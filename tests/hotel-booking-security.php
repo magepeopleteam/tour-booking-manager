@@ -165,6 +165,12 @@ try {
 	/* 1. A direct product request is not a hotel booking. */
 	$assert(false === apply_filters('woocommerce_add_to_cart_validation', true, $product_id, 1), 'A direct add-to-cart of the hidden hotel product was accepted.');
 	$assert(is_wp_error(TTBM_Hotel_Booking::validate_linked_product_add($product_id, array())), 'The hotel add-to-cart validator accepted a request without booking data.');
+	$allow_flag = new ReflectionProperty('TTBM_Hotel_Booking', 'allow_linked_product_add');
+	$allow_flag->setAccessible(true);
+	$allow_flag->setValue(null, $product_id);
+	$assert(true === TTBM_Hotel_Booking::validate_linked_product_add($product_id, array()), 'The hotel handler add was blocked on WooCommerce versions that validate inside the cart.');
+	$allow_flag->setValue(null, 0);
+	$assert(is_wp_error(TTBM_Hotel_Booking::validate_linked_product_add($product_id, array())), 'The handler-only flag was not reset after the add.');
 	$assert(true === apply_filters('woocommerce_add_to_cart_validation', true, $product_id, 1, 0, array(), $values($hotel_id, $product_id, '2027-06-01', '2027-06-04', 600)), 'The hotel handler cart item was rejected.');
 	if (defined('WC_VERSION') && version_compare(WC_VERSION, '7.0', '>=')) {
 		$assert(false === wc_get_product($product_id)->is_purchasable(), 'The hidden hotel product is purchasable without a booking.');

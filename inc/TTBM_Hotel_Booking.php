@@ -123,6 +123,9 @@
 			public static function is_hotel_linked_product($product_id) {
 				return self::hotel_id_for_product($product_id) > 0;
 			}
+			public static function is_linked_product_add_allowed($product_id) {
+				return (int) self::$allow_linked_product_add === absint($product_id);
+			}
 			private static function normalize_booking_payload($payload) {
 				if (is_string($payload) && is_serialized($payload)) {
 					$payload = @unserialize($payload, array('allowed_classes' => false));
@@ -240,6 +243,12 @@
 			}
 			public static function validate_linked_product_add($product_id, $cart_item_data = array()) {
 				if (!self::is_hotel_linked_product($product_id)) {
+					return true;
+				}
+				// The booking handler's own add_to_cart() call on WooCommerce
+				// versions that validate inside WC_Cart does not receive cart item
+				// data through this filter; the request-scoped flag covers it.
+				if (self::is_linked_product_add_allowed($product_id)) {
 					return true;
 				}
 				if (!is_array($cart_item_data) || empty($cart_item_data['ttbm_hotel_booking'])) {

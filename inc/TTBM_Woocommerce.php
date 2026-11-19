@@ -9,7 +9,7 @@
 	if (!class_exists('TTBM_Woocommerce')) {
 		class TTBM_Woocommerce {
 			public function __construct() {
-				add_filter('woocommerce_add_to_cart_validation', array($this, 'validate_add_to_cart'), 90, 3);
+				add_filter('woocommerce_add_to_cart_validation', array($this, 'validate_add_to_cart'), 90, 6);
 				add_filter('woocommerce_add_cart_item_data', array($this, 'add_cart_item_data'), 90, 3);
 				add_action('woocommerce_before_calculate_totals', array($this, 'before_calculate_totals'), 90, 1);
 				add_filter('woocommerce_cart_item_thumbnail', array($this, 'cart_item_thumbnail'), 90, 3);
@@ -48,8 +48,33 @@
 				$price = wc_format_decimal((string) $price);
 				return is_numeric($price) && is_finite((float) $price) && (float) $price >= 0 ? (float) $price : null;
 			}
-			public function validate_add_to_cart($passed, $product_id) {
-				if (!$passed || !isset($_POST['ttbm_form_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_form_nonce'])), 'ttbm_form_nonce')) {
+			public function validate_add_to_cart($passed, $product_id, $quantity = 1, $variation_id = 0, $variations = array(), $cart_item_data = array()) {
+				if (!$passed) {
+					return false;
+				}
+				/*
+				 * Hidden tour/hotel products are published so WooCommerce can add
+				 * them from the booking handlers, but they are not shop products.
+				 * Reject an ordinary add-to-cart unless the request came from the
+				 * matching handler: a nonce-checked tour form or a hotel cart item
+				 * that already carries server-validated booking data.
+				 */
+				$product_id = absint($product_id);
+				$linked_id = absint(get_post_meta($product_id, 'link_ttbm_id', true));
+				$linked_type = $linked_id ? get_post_type($linked_id) : '';
+				if ('ttbm_hotel' === $linked_type) {
+					if (!class_exists('TTBM_Hotel_Booking')) {
+						wc_add_notice(esc_html__('Hotel rooms can only be booked through the hotel booking form.', 'tour-booking-manager'), 'error');
+						return false;
+					}
+					$hotel_validation = TTBM_Hotel_Booking::validate_linked_product_add($product_id, (array) $cart_item_data);
+					if (is_wp_error($hotel_validation)) {
+						wc_add_notice($hotel_validation->get_error_message(), 'error');
+						return false;
+					}
+					return $passed;
+				}
+				if (!isset($_POST['ttbm_form_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['ttbm_form_nonce'])), 'ttbm_form_nonce')) {
 					return $passed;
 				}
 				$tour_id = self::resolve_booking_tour_id($product_id);

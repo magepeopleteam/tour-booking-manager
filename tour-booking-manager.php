@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 require_once __DIR__ . '/vendor/appneck/wordpress-sdk/appneck-wordpress-sdk/appneck-sdk.php';
 appneck_sdk_load_latest();
 
-$GLOBALS['my_plugin_sdk'] = \Appneck\Sdk\Sdk::bootstrap(
+$GLOBALS['tour_booking_manager_appneck_sdk'] = \Appneck\Sdk\Sdk::bootstrap(
 	'pk_nIsTPODBoD4cPfozCSfFxCjW5LvhJQny',  // your API key
 	'sk_qUMvG1do0EHJO7jCJ7CLcEgMFSxrDrVCJeqkcuXL9dAOUVVw', // your product secret
 	'https://appneck.com',                  // the Appneck server URL
